@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 
 
 function ListView () {
@@ -19,6 +20,8 @@ function ListView () {
     const categories = useSelector((store) => store.categories);
     // const [allData,setAllData] = useState(list);
     // const [filteredData,setFilteredData] = useState(allData);
+
+    const [category, setCategory] = useState('');
 
     // defines parameters for Select
     const ITEM_HEIGHT = 48;
@@ -39,7 +42,21 @@ function ListView () {
         dispatch({
             type: "FETCH_CATEGORIES",
         });
-    }, []);
+        dispatch({
+            type: "FILTER_CATEGORY",
+            payload: category
+        });
+    }, [category]);
+
+    function handleReset () {
+        setCategory();
+        dispatch({
+            type: "FETCH_LIST",
+        });
+        dispatch({
+            type: "FETCH_CATEGORIES",
+        });
+    }
 
     // const handleSearch = (event) =>{
     //     let value = event.target.value.toLowerCase();
@@ -51,37 +68,47 @@ function ListView () {
     //     setFilteredData(result);
     // };
 
+
+
     return(
         <>
         {/* <div style={{ margin: '0 auto', marginTop: '10%' }}>
             <label>Search:</label>
             <input type="text" onChange={(event) =>handleSearch(event)} />
         </div> */}
-                <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="select-category">Category</InputLabel>
-                <Select
-                    labelId="select-category"
-                    id="select-category"
-                    // Stretch: make multiple genre selections possible
-                    // multiple
-                    // value={newMovie.genre_id}
-                    // onChange={(event) =>
-                    //     setNewMovie({ ...newMovie, genre_id: event.target.value })
-                    // }
-                    input={<OutlinedInput label="Category" />}
-                    MenuProps={MenuProps}
-                >
-                    {categories.map((category) => (
-                    <MenuItem 
-                        key={category.id} 
-                        value={category.id}
-                    >
-                        {category.name}
-                    </MenuItem>
-                    ))}
-                </Select>
-                </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="select-category">Category</InputLabel>
+        <Select
+            labelId="select-category"
+            id="select-category"
+            value={category}
+            onChange={(event) =>
+                { setCategory(event.target.value) }
+            }
+            input={<OutlinedInput label="Category" />}
+        >
+            {categories.map((category) => (
+            <MenuItem 
+                key={category.id} 
+                value={category.id}
+            >
+                {category.name}
+            </MenuItem>
+            ))}
+        </Select>
+        </FormControl>
+
+        <Button
+            variant="contained"
+            onClick={() => {
+                handleReset();
+            }}
+            >
+            RESET
+        </Button>
+
         <ul style={{padding:10}}>
+
             {list?.map((item,index)=>{
                 return(
                     <li key={index}>
@@ -89,6 +116,7 @@ function ListView () {
                     </li>
                 )
             })}
+
         </ul>
         </>
     )
