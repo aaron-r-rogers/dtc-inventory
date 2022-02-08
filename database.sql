@@ -71,9 +71,9 @@ CREATE TABLE "furnitureMaterial" (
 -- BEGIN QUERIES USED IN APP
 
 -- this query gets everything needed to render list
-SELECT "path", "designer"."name" AS "designerName", "dateUpdate",
-	ARRAY_AGG("material"."name") AS "material"
-FROM "image"
+SELECT "path", "designer"."name" AS "designerName",
+ARRAY_AGG("material"."name") AS "material"
+	FROM "image"
 JOIN "furniture"
 	ON "furniture"."id" = "image"."furnitureId"
 JOIN "designer"
