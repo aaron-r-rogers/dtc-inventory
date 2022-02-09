@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useEffect } from "react";
 
+//internal imports
+import DimensionFilter from '../DimensionFilter/DimensionFilter';
+
 //MUI imports
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +14,8 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
+
 
 
 function ListView () {
@@ -18,22 +23,9 @@ function ListView () {
     const dispatch = useDispatch();
     const list = useSelector((store) => store.list);
     const categories = useSelector((store) => store.categories);
-    // const [allData,setAllData] = useState(list);
-    // const [filteredData,setFilteredData] = useState(allData);
 
+    const [search, setSearch] = useState('');
     const [category, setCategory] = useState('');
-
-    // defines parameters for Select
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-        },
-    };
 
     useEffect(() => {
         dispatch({
@@ -46,10 +38,15 @@ function ListView () {
             type: "FILTER_CATEGORY",
             payload: category
         });
-    }, [category]);
+        dispatch({
+            type: "FETCH_SEARCH",
+            payload: search
+        });
+    }, [category, search]);
 
     function handleReset () {
         setCategory();
+        setSearch('');
         dispatch({
             type: "FETCH_LIST",
         });
@@ -58,24 +55,22 @@ function ListView () {
         });
     }
 
-    // const handleSearch = (event) =>{
-    //     let value = event.target.value.toLowerCase();
-    //     let result = [];
-    //     console.log(value);
-    //     result = allData.filter((data) => {
-    //     return data.designerName.search(value) != -1;
-    //     });
-    //     setFilteredData(result);
-    // };
+    const handleSearch = (event) =>{
+        setSearch(event.target.value.toLowerCase());
+    };
 
 
 
     return(
         <>
-        {/* <div style={{ margin: '0 auto', marginTop: '10%' }}>
-            <label>Search:</label>
-            <input type="text" onChange={(event) =>handleSearch(event)} />
-        </div> */}
+        <TextField
+            sx={{ m:1, width: 300 }}
+            label="Search"
+            type="text" 
+            value={search} 
+            onChange={(event) =>handleSearch(event)} 
+        />
+        <br></br>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
         <Select
@@ -97,7 +92,6 @@ function ListView () {
             ))}
         </Select>
         </FormControl>
-
         <Button
             variant="contained"
             onClick={() => {
