@@ -67,3 +67,20 @@ CREATE TABLE "furnitureMaterial" (
 	FOREIGN KEY ("furnitureId")
 		REFERENCES "furniture"("id")
 );
+
+-- BEGIN QUERIES USED IN APP
+
+-- this query gets everything needed to render list
+SELECT "path", "designer"."name" AS "designerName",
+ARRAY_AGG("material"."name") AS "material"
+	FROM "image"
+JOIN "furniture"
+	ON "furniture"."id" = "image"."furnitureId"
+JOIN "designer"
+	ON "designer"."id" = "furniture"."designerId"
+JOIN "furnitureMaterials"
+	ON "furnitureMaterials"."furnitureId" = "furniture"."id"
+JOIN "material"
+	ON "material"."id" = "furnitureMaterials"."materialId"
+GROUP BY "path", "designer"."name", "dateUpdate"
+ORDER BY "dateUpdate" DESC;
