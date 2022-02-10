@@ -39,6 +39,7 @@ router.get('/:search', (req, res) => {
         res.send(dbRes.rows)
     }).catch(err => {
         console.error('err in get search', err);
+        res.sendStatus(500);
     })
 });
 

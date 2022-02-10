@@ -13,7 +13,7 @@ const listRouter = require('./routes/list.router');
 const categoryRouter = require('./routes/category.router');
 const searchRouter = require('./routes/search.router');
 const dimensionsRouter = require('./routes/dimensions.router');
-
+const detailsRouter = require('./routes/details.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -32,6 +32,7 @@ app.use('/api/list', listRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/dimensions', dimensionsRouter);
+app.use('/api/details', detailsRouter);
 
 // Serve static files
 app.use(express.static('build'));

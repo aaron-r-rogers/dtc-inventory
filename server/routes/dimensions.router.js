@@ -45,6 +45,7 @@ router.get('/', (req, res) => {
         res.send(dbRes.rows)
     }).catch(err => {
         console.error('err in get dimensions', err);
+        res.sendStatus(500);
     })
 });
 

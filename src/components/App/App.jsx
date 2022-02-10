@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ListView from '../ListView/ListView';
+import DetailsView from '../DetailsView/DetailsView';
 
 import './App.css';
 
@@ -117,10 +118,24 @@ function App() {
           >
             {user.id ?
               // If the user is already logged in, 
-              // redirect them to the /user page
+              // go to ListView
               <ListView />
               :
-              // Otherwise, show the ListView page
+              // Otherwise, go to register
+              <Redirect to="/register" />
+            }
+          </Route>
+
+          <Route
+            exact
+            path="/details/:id"
+          >
+            {user.id ?
+              // If the user is already logged in, 
+              // go to DetailsView
+              <DetailsView />
+              :
+              // Otherwise, go to register
               <Redirect to="/register" />
             }
           </Route>

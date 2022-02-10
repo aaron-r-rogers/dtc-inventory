@@ -1,3 +1,6 @@
+// External imports
+import { Link } from "react-router-dom";
+
 // MUI imports
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -7,10 +10,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
 function ItemCard({item}) {
-
-    const handleDetailsClick = () =>{
-        history.push(`/details/${id}`);
-    };
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -28,12 +27,11 @@ function ItemCard({item}) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button 
-                size="medium"
-                onClick={handleDetailsClick}
-            >
+            <Link to={`/details/${item.id}`}>
+                <Button size="medium">
                     Details
-            </Button>
+                </Button>
+            </Link>
         </CardActions>
         </Card>
     )
