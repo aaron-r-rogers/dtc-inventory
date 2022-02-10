@@ -9,9 +9,12 @@ function* filterDimensions(action) {
     try {
         let filteredList = yield axios.get(`/api/dimensions`, 
         {params: {
+            minW: action.payload.minW,
+            minD: action.payload.minD,
+            minH: action.payload.minH,
             maxW: action.payload.maxW,
+            maxD: action.payload.maxD,
             maxH: action.payload.maxH,
-            maxD: action.payload.maxD
         }});
         yield put({
             type: 'SET_LIST',

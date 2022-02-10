@@ -53,6 +53,12 @@ function ListView () {
         dispatch({
             type: "FETCH_CATEGORIES",
         });
+        setMaxW(999);
+        setMaxD(999);
+        setMaxH(999);
+        setMinW(1);
+        setMinD(1);
+        setMinH(1);
     }
 
     const handleSearch = (event) =>{
