@@ -4,9 +4,15 @@ import axios from 'axios';
 
 // gets all furniture from DB for ListView component
 function* filterDimensions(action) {
-    console.log('filterDimensions action.payload:', action.payload);
+    console.log('filterDimensions action.payload:',
+        );
     try {
-        let filteredList = yield axios.get(`/api/dimensions/${action.payload}`);
+        let filteredList = yield axios.get(`/api/dimensions`, 
+        {params: {
+            maxW: action.payload.maxW,
+            maxH: action.payload.maxH,
+            maxD: action.payload.maxD
+        }});
         yield put({
             type: 'SET_LIST',
             payload: filteredList.data
@@ -17,7 +23,7 @@ function* filterDimensions(action) {
 }
 
 function* filterDimensionsSaga() {
-    yield takeLatest('FILTER_CATEGORY', filterDimensions);
+    yield takeLatest('FETCH_DIMENSIONS', filterDimensions);
 }
 
 export default filterDimensionsSaga;

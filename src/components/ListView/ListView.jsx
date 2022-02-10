@@ -92,6 +92,9 @@ function ListView () {
             ))}
         </Select>
         </FormControl>
+
+        <DimensionFilter />
+
         <Button
             variant="contained"
             onClick={() => {

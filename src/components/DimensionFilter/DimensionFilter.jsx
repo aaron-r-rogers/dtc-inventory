@@ -9,46 +9,54 @@ import TextField from "@mui/material/TextField";
 function DimensionFilter () {
     const dispatch = useDispatch();
 
-    const [maxW, setMaxW] = useState(9999);
-    const [maxD, setMaxD] = useState(9999);
-    const [maxH, setMaxH] = useState(9999);
+    const [maxW, setMaxW] = useState(null);
+    const [maxD, setMaxD] = useState(null);
+    const [maxH, setMaxH] = useState(null);
 
     const dimensions = {
-        dimMinW: maxW,
-        dimMinD: maxD,
-        dimMinH: maxH
+        maxW: maxW,
+        maxD: maxD,
+        maxH: maxH
     }
 
     const handleDimensions = (event) =>{
+        console.log('dimensions:', dimensions);
         dispatch({
             type: "FETCH_DIMENSIONS",
             payload: dimensions
         });
+        setMaxW('');
+        setMaxD('');
+        setMaxH('');
     };
 
     return(
         <>
+        <br></br>
         <TextField
-            sx={{ m:1, width: 80 }}
+            sx={{ m:1, width: 120 }}
             label="Max Width"
-            type="text" 
-            onChange={(event) =>setMaxW(event.target.value)} 
+            type="text"
+            value={maxW} 
+            onChange={(event) =>setMaxW(Number(event.target.value))} 
         />
         <br></br>
 
         <TextField
-            sx={{ m:1, width: 80 }}
+            sx={{ m:1, width: 120 }}
             label="Max Depth"
             type="text" 
-            onChange={(event) =>setMaxD(event.target.value)} 
+            value={maxD}
+            onChange={(event) =>setMaxD(Number(event.target.value))} 
         />
         <br></br>
 
         <TextField
-            sx={{ m:1, width: 80 }}
+            sx={{ m:1, width: 120 }}
             label="Max Height"
             type="text" 
-            onChange={(event) =>setMaxH(event.target.value)} 
+            value={maxH}
+            onChange={(event) =>setMaxH(Number(event.target.value))} 
         />
         <br></br>
         
