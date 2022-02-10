@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 //internal imports
 import DimensionFilter from '../DimensionFilter/DimensionFilter';
+import ItemCard from '../ItemCard/ItemCard';
 
 //MUI imports
 import Select from "@mui/material/Select";
@@ -15,8 +16,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
-
-
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 function ListView () {
     console.log('in ListView');
@@ -110,17 +111,17 @@ function ListView () {
             RESET
         </Button>
 
-        <ul style={{padding:10}}>
-
-            {list?.map((item,index)=>{
-                return(
-                    <li key={index}>
-                        <img src={`images/${item.path}`}/> {item.material} {item.designerName}
-                    </li>
-                )
-            })}
-
-        </ul>
+        <Box sx={{ width: '100%' }}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                {list?.map((item)=>
+                    <Grid item xs={6} key={item.id}>
+                    <ItemCard 
+                        item={item}
+                    />
+                    </Grid>
+                )}
+            </Grid>
+        </Box>
         </>
     )
 }
