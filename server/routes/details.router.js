@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
             "dimMaxW", 
             "dimMaxD", 
             "dimMaxH",  
-            ARRAY_AGG ("category"."name") AS "categoryName",
+            "category"."name" AS "categoryName",
             "furniture"."comments" AS "comments"
         FROM "image"
         JOIN "furniture"
