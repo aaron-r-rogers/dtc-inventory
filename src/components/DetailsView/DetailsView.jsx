@@ -13,6 +13,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 
+// internal imports
+import DetailsDimensions from '../DetailsDimensions/DetailsDimensions';
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -50,19 +53,37 @@ function DetailsView() {
 
     // State
     const [editable, setEditable] = useState(false);
-    const [newDesigner, setNewDesigner] = useState(newDesigner);
-    const [newComments, setNewComments] = useState(newComments);
-    const [newCategory, setNewCategory] = useState(newCategory);
-    const [newMaterial, setNewMaterial] = useState([newMaterial]);
+    const [newDesigner, setNewDesigner] = useState(details.designerName);
+    const [newComments, setNewComments] = useState(details.comments);
+    const [newCategory, setNewCategory] = useState(details.categoryName);
+    const [newMaterial, setNewMaterial] = useState([details.material]);
+    const [newDimMinW, setNewDimMinW] = useState(details.dimMinW);
+    const [newDimMinD, setNewDimMinD] = useState(details.dimMinD);
+    const [newDimMinH, setNewDimMinH] = useState(details.dimMinH);
+    const [newDimMaxW, setNewDimMaxW] = useState(details.dimMaxW);
+    const [newDimMaxD, setNewDimMaxD] = useState(details.dimMaxD);
+    const [newDimMaxH, setNewDimMaxH] = useState(details.dimMaxH);
 
     const editedItem = {
-        material: newMaterial,
-        designer: newDesigner,
+        dimMinW: newDimMinW,
+        dimMinD: newDimMinD,
+        dimMinH: newDimMinH,
+        dimMaxW: newDimMaxW,
+        dimMaxD: newDimMaxD,
+        dimMaxH: newDimMaxH,
+        comments: newComments,
         category: newCategory,
-        comments: newComments
+        designer: newDesigner,
+        furnitureId: params.id
+    }
+
+    const furnitureMaterials = {
+        furnitureId: params.id,
+        material: newMaterial,
     }
 
     useEffect(() => {
+        console.log('newDimMaxW is:', newDimMaxW);
         dispatch({
             type: 'FETCH_DETAILS',
             payload: params.id
@@ -77,10 +98,7 @@ function DetailsView() {
             type: "FETCH_MATERIALS",
         });
         setNewDesigner(details.designerName);
-        setNewComments(details.comments);
-        setNewCategory(details.categoryName);
-        setNewMaterial([details.material])
-    }, [params.id]);
+    }, [params.id, ]);
 
     const handleChange = (event) => {
         const {
@@ -94,8 +112,12 @@ function DetailsView() {
 
     const submitChanges = () => {
         dispatch({
-            type: 'SEND_CHANGES',
+            type: 'SEND_FURNITURE_EDIT',
             payload: editedItem
+        });
+        dispatch({
+            type: 'SEND_MATERIALS_EDIT',
+            payload: furnitureMaterials
         });
     }
 
@@ -103,7 +125,10 @@ function DetailsView() {
         <>
         <img src={`images/${details.path}`}></img>
         <br></br>
-        <p>Material: {details.material?.join(', ')}</p>
+        <p>Material:</p>
+        {editable === false ?
+        <p>{details.material?.join(', ')}</p> :
+        
         <div>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="demo-multiple-material-label">Material</InputLabel>
@@ -127,7 +152,7 @@ function DetailsView() {
             ))}
         </Select>
         </FormControl>
-        </div>
+        </div>}
         <p>Designer:</p>
         {editable === false ?
         <p>{details.designerName}</p> :
@@ -176,7 +201,10 @@ function DetailsView() {
             ))}
         </Select>
         </FormControl>}
-        <p>Dimensions: {details.dimMinW}" x {details.dimMinD}" x {details.dimMinH}"</p>
+        <p>Dimensions:</p>
+        {editable === false ?
+        <p>{details.dimMinW}" x {details.dimMinD}" x {details.dimMinH}"</p> :
+        <DetailsDimensions />}
         <p>Comments:</p>
         {editable === false ?
             <p>{details.comments}</p> :

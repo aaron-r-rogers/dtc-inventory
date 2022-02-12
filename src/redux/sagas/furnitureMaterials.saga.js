@@ -1,9 +1,9 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* sendChanges(action) {
+function* sendFurnitureMaterials(action) {
     try {
-        yield axios.put('/api/edit', action.payload);
+        yield axios.post('/api/edit', action.payload);
 
         yield put({ 
             type: 'FETCH_DETAILS',
@@ -15,8 +15,8 @@ function* sendChanges(action) {
     }
 }
 
-function* detailsEditSaga() {
-    yield takeLatest('SEND_FURNITURE_EDIT', sendChanges);
+function* furnitureMaterialsSaga() {
+    yield takeLatest('SEND_MATERIALS_EDIT', sendFurnitureMaterials);
 }
 
-export default detailsEditSaga;
+export default furnitureMaterialsSaga;
