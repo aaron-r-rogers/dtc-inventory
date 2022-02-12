@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     console.log('in GET dimensions router, req.query', req.query);
 
     const queryText = `
-    SELECT "path", "category"."name" AS "categoryName",
+    SELECT "furniture"."id", "path", "category"."name" AS "categoryName",
 	"designer"."name" AS "designerName",
 	ARRAY_AGG("material"."name") AS "material"
     FROM "image"
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
         OR $3 < "dimMaxD" AND "dimMinD" < $4
         AND $5 < "dimMinH" AND "dimMinH" < $6
         OR $5 < "dimMaxH" AND "dimMinH" < $6
-    GROUP BY "path", "designer"."name", "dateUpdate", "category"."name"
+    GROUP BY "furniture"."id", "path", "designer"."name", "dateUpdate", "category"."name"
     ORDER BY "dateUpdate" DESC;
     `;
 
@@ -45,6 +45,7 @@ router.get('/', (req, res) => {
         res.send(dbRes.rows)
     }).catch(err => {
         console.error('err in get dimensions', err);
+        res.sendStatus(500);
     })
 });
 

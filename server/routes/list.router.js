@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     console.log('in GET list router');
     pool.query(`
-    SELECT "path", "category"."name" AS "categoryName",
+    SELECT "furniture"."id", "path", "category"."name" AS "categoryName",
         "designer"."name" AS "designerName",
         ARRAY_AGG("material"."name") AS "material"
     FROM "image"
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
         ON "furnitureMaterials"."furnitureId" = "furniture"."id"
     JOIN "material"
         ON "material"."id" = "furnitureMaterials"."materialId"
-    GROUP BY "path", "designer"."name", "category"."name", "furniture"."dateUpdate"
+    GROUP BY "furniture"."id", "path", "designer"."name", "category"."name", "furniture"."dateUpdate"
     ORDER BY "dateUpdate" DESC;
     `).then(dbRes => {
         console.log('dbRes.rows is:', dbRes.rows);
@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
 router.get('/:category', (req, res) => {
     console.log('in GET list router');
     const queryText = `
-        SELECT "path", "category"."name" AS "categoryName",
+        SELECT "furniture"."id", "path", "category"."name" AS "categoryName",
         "designer"."name" AS "designerName",
         ARRAY_AGG("material"."name") AS "material"
         FROM "image"
@@ -50,7 +50,7 @@ router.get('/:category', (req, res) => {
         JOIN "material"
             ON "material"."id" = "furnitureMaterials"."materialId"
         WHERE "category"."id" = $1
-        GROUP BY "path", "designer"."name", "category"."name", "furniture"."dateUpdate"
+        GROUP BY "furniture"."id", "path", "designer"."name", "category"."name", "furniture"."dateUpdate"
         ORDER BY "dateUpdate" DESC;
     `;
     const queryParams=[

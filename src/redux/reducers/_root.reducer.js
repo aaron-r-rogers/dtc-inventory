@@ -3,6 +3,9 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import list from './list.reducer';
 import categories from './category.reducer';
+import details from './details.reducer';
+import designers from './designers.reducer';
+import materials from './materials.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -15,6 +18,9 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   list, // array of objects with properties path, designerName, and material
   categories, // all of the categories; used to filter in list and editable in admin
+  details, // details fetched based on id of clicked item from list to details view
+  designers, // all of the designers to make a dropdown in details edit
+  materials, // all of the materials to make a dropdown in details edit
 });
 
 export default rootReducer;

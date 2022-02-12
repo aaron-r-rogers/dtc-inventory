@@ -4,14 +4,14 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    console.log('in GET category router');
+    console.log('in GET designer router');
     pool.query(`
-    SELECT * FROM "category";
+    SELECT * FROM "designer";
     `).then(dbRes => {
-        console.log('dbRes.rows is:', dbRes.rows);
+        console.log('dbRes.rows designers is:', dbRes.rows);
         res.send(dbRes.rows)
     }).catch(err => {
-        console.error('err in get category', err);
+        console.error('err in get designers', err);
         res.sendStatus(500);
     })
 });

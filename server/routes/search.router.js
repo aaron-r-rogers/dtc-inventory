@@ -6,7 +6,7 @@ router.get('/:search', (req, res) => {
     console.log('in GET search router, req.params:', req.params);
 
     const queryText = `
-    SELECT "path", "category"."name" AS "categoryName",
+    SELECT "furniture"."id", "path", "category"."name" AS "categoryName",
         "designer"."name" AS "designerName",
         ARRAY_AGG("material"."name") AS "material"
     FROM "image"
@@ -24,7 +24,7 @@ router.get('/:search', (req, res) => {
         OR "designer"."name" ILIKE $1
         OR "material"."name" ILIKE $1
         OR "furniture"."comments" ILIKE $1
-    GROUP BY "path", "designer"."name", "dateUpdate", "category"."name"
+    GROUP BY "furniture"."id", "path", "designer"."name", "dateUpdate", "category"."name"
     ORDER BY "dateUpdate" DESC;
     `;
 
@@ -39,6 +39,7 @@ router.get('/:search', (req, res) => {
         res.send(dbRes.rows)
     }).catch(err => {
         console.error('err in get search', err);
+        res.sendStatus(500);
     })
 });
 
