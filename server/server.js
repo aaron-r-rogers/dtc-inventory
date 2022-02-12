@@ -14,6 +14,8 @@ const categoryRouter = require('./routes/category.router');
 const searchRouter = require('./routes/search.router');
 const dimensionsRouter = require('./routes/dimensions.router');
 const detailsRouter = require('./routes/details.router');
+const designersRouter = require('./routes/designers.router');
+const materialsRouter = require('./routes/materials.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +35,8 @@ app.use('/api/category', categoryRouter);
 app.use('/api/search', searchRouter);
 app.use('/api/dimensions', dimensionsRouter);
 app.use('/api/details', detailsRouter);
+app.use('/api/designers', designersRouter);
+app.use('/api/materials', materialsRouter);
 
 // Serve static files
 app.use(express.static('build'));

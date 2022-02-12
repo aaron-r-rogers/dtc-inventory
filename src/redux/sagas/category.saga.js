@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// gets all furniture from DB for ListView component
+// gets all categories from DB for ListView filtering
 function* fetchCategories() {
     console.log('in fetchCategories saga');
     try {
