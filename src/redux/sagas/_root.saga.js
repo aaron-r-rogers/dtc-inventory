@@ -12,6 +12,8 @@ import designersSaga from './designers.saga';
 import materialsSaga from './materials.saga';
 import detailsEditSaga from './detailsEdit.saga';
 import furnitureMaterialsSaga from './furnitureMaterials.saga';
+import uploadSaga from './upload.saga';
+import addNewItemSaga from './addItem.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -35,5 +37,7 @@ export default function* rootSaga() {
     materialsSaga(),
     detailsEditSaga(),
     furnitureMaterialsSaga(),
+    uploadSaga(),
+    addNewItemSaga(),
   ]);
 }

@@ -32,6 +32,10 @@ function Nav() {
               List
             </Link>
 
+            <Link className="navLink" to="/add">
+              Add
+            </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}

@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ListView from '../ListView/ListView';
 import DetailsView from '../DetailsView/DetailsView';
+import AddItem from '../AddItem/AddItem';
 
 import './App.css';
 
@@ -134,6 +135,20 @@ function App() {
               // If the user is already logged in, 
               // go to DetailsView
               <DetailsView />
+              :
+              // Otherwise, go to register
+              <Redirect to="/register" />
+            }
+          </Route>
+
+          <Route
+            exact
+            path="/add"
+          >
+            {user.id ?
+              // If the user is already logged in, 
+              // go to AddItem
+              <AddItem />
               :
               // Otherwise, go to register
               <Redirect to="/register" />

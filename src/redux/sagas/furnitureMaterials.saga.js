@@ -7,7 +7,7 @@ function* sendFurnitureMaterials(action) {
 
         yield put({ 
             type: 'FETCH_DETAILS',
-            payload: action.payload.furnitureId
+            payload: Number(action.payload.furnitureId)
         });
 
     } catch (error) {

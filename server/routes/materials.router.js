@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
     console.log('in GET materials router');
     pool.query(`
-    SELECT ARRAY_AGG("material"."name") AS "materials"
+    SELECT ARRAY_AGG("material"."name" 
+        ORDER BY "material"."name") AS "materials"
     FROM "material";
     `).then(dbRes => {
         console.log('dbRes.rows material is:', dbRes.rows);

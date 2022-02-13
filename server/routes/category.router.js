@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
     console.log('in GET category router');
     pool.query(`
-    SELECT * FROM "category";
+        SELECT * FROM "category"
+        ORDER BY "category"."name" ASC;
     `).then(dbRes => {
         console.log('dbRes.rows is:', dbRes.rows);
         res.send(dbRes.rows)

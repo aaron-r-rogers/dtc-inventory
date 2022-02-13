@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
     console.log('in GET designer router');
     pool.query(`
-    SELECT * FROM "designer";
+    SELECT * FROM "designer"
+    ORDER BY "designer"."name" ASC;
     `).then(dbRes => {
         console.log('dbRes.rows designers is:', dbRes.rows);
         res.send(dbRes.rows)

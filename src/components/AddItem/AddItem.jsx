@@ -1,9 +1,8 @@
 // external imports
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 // MUI imports
 import Select from "@mui/material/Select";
@@ -14,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 
 // internal imports
-import DetailsDimensions from '../DetailsDimensions/DetailsDimensions';
+import AddDimensions from '../AddDimensions/AddDimensions';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -36,50 +35,56 @@ function getStyles(material, newMaterial, theme) {
     };
 }
 
-function DetailsView() {
+function AddItem() {
 
     const theme = useTheme();
 
     // Hooks
     const dispatch = useDispatch();
-    //const history = useHistory();
-    const params = useParams();
 
-    // Redux
-    const details = useSelector((store) => store.details);
+    // Redux store
     const categories = useSelector((store) => store.categories);
     const designers = useSelector((store) => store.designers);
     const materials = useSelector((store) => store.materials);
+    const imagePath = useSelector((store) => store.imagePath);
+    const newDimensions = useSelector((store) => store.newItemDimensionsReducer);
 
     // State
-    const [editable, setEditable] = useState(false);
-    const [newDesigner, setNewDesigner] = useState(details.designerName);
-    const [newComments, setNewComments] = useState(details.comments);
-    const [newCategory, setNewCategory] = useState(details.categoryName);
-    const [newMaterial, setNewMaterial] = useState([details.material]);
-    const [newDimMinW, setNewDimMinW] = useState(details.dimMinW);
-    const [newDimMinD, setNewDimMinD] = useState(details.dimMinD);
-    const [newDimMinH, setNewDimMinH] = useState(details.dimMinH);
-    const [newDimMaxW, setNewDimMaxW] = useState(details.dimMaxW);
-    const [newDimMaxD, setNewDimMaxD] = useState(details.dimMaxD);
-    const [newDimMaxH, setNewDimMaxH] = useState(details.dimMaxH);
+    const [newDesigner, setNewDesigner] = useState('');
+    const [newComments, setNewComments] = useState('');
+    const [newCategory, setNewCategory] = useState('');
+    const [newMaterial, setNewMaterial] = useState('');
+    const [fileData, setFileData] = useState();
 
-    const editedItem = {
-        dimMinW: Number(newDimMinW),
-        dimMinD: Number(newDimMinD),
-        dimMinH: Number(newDimMinH),
-        dimMaxW: Number(newDimMaxW),
-        dimMaxD: Number(newDimMaxD),
-        dimMaxH: Number(newDimMaxH),
+    const fileChangeHandler = (evt) => {
+        setFileData(evt.target.files[0])
+    }
+
+    const onSubmitHandler = (evt) => {
+        evt.preventDefault();
+
+        const data = new FormData();
+
+        data.append('image', fileData)
+
+        dispatch({
+            type:'UPLOAD',
+            payload: data
+        })
+    }
+
+    const newItem = {
+        dimMinW: Number(newDimensions.dimMinW),
+        dimMinD: Number(newDimensions.dimMinD),
+        dimMinH: Number(newDimensions.dimMinH),
+        dimMaxW: Number(newDimensions.dimMaxW),
+        dimMaxD: Number(newDimensions.dimMaxD),
+        dimMaxH: Number(newDimensions.dimMaxH),
         comments: newComments,
         category: newCategory,
         designer: newDesigner,
-        furnitureId: params.id
-    }
-
-    const furnitureMaterials = {
-        furnitureId: params.id,
-        material: newMaterial,
+        path: imagePath,
+        material: newMaterial
     }
 
     useEffect(() => {
@@ -92,11 +97,7 @@ function DetailsView() {
         dispatch({
             type: "FETCH_MATERIALS",
         });
-        dispatch({
-            type: 'FETCH_DETAILS',
-            payload: params.id
-        });
-    }, [params.id]);
+    }, []);
 
     const handleChange = (event) => {
         const {
@@ -108,32 +109,33 @@ function DetailsView() {
         );
     };
 
-    const submitChanges = () => {
+    const submitItem = () => {
         dispatch({
-            type: 'SEND_FURNITURE_EDIT',
-            payload: editedItem
-        });
-        dispatch({
-            type: 'SEND_MATERIALS_EDIT',
-            payload: furnitureMaterials
+            type: 'SEND_NEW_ITEM',
+            payload: newItem
         });
     }
 
     return (
         <>
-        <img src={`images/${details.path}`}></img>
+        <h2>Add an Item:</h2>
+        <div>
+            <h3>Image Upload</h3>
+            <form  onSubmit={onSubmitHandler} >
+                <br></br>
+                <input type="file" onChange={fileChangeHandler}/>
+                <button type="submit">Submit</button>
+            </form> 
+        </div>
         <br></br>
         <p>Material:</p>
-        {editable === false ?
-        <p>{details.material?.join(', ')}</p> :
-        
         <div>
         <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="multiple-material-label">Material</InputLabel>
+        <InputLabel id="demo-multiple-material-label">Material</InputLabel>
         <Select
-            labelId="multiple-material-label"
-            id="multiple-material"
-            // multiple
+            labelId="demo-multiple-material-label"
+            id="demo-multiple-material"
+            //multiple
             value={newMaterial}
             onChange={handleChange}
             input={<OutlinedInput label="material" />}
@@ -150,10 +152,8 @@ function DetailsView() {
             ))}
         </Select>
         </FormControl>
-        </div>}
+        </div>
         <p>Designer:</p>
-        {editable === false ?
-        <p>{details.designerName}</p> :
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-designer">Designer</InputLabel>
         <Select
@@ -174,10 +174,8 @@ function DetailsView() {
             </MenuItem>
             ))}
         </Select>
-        </FormControl>}
+        </FormControl>
         <p>Category:</p>
-        {editable === false ?
-            <p>{details.categoryName}</p> :
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
         <Select
@@ -198,29 +196,23 @@ function DetailsView() {
             </MenuItem>
             ))}
         </Select>
-        </FormControl>}
+        </FormControl>
         <p>Dimensions:</p>
-        {editable === false ?
-        <p>{details.dimMinW}" x {details.dimMinD}" x {details.dimMinH}"</p> :
-        <DetailsDimensions />}
+        <AddDimensions />
         <p>Comments:</p>
-        {editable === false ?
-            <p>{details.comments}</p> :
-            <textarea rows="4" cols="50" 
-                type="text"
-                aria-label="Comments"
-                value={newComments}
-                onChange={(event) =>
-                    { setNewComments(event.target.value) }
-                }>
-            </textarea>
-        }
-        <button onClick={() => setEditable(true)}>Edit Details</button>
-        <button onClick={submitChanges}>Submit Changes</button>
-        <button onClick={() => setEditable(false)}>Cancel</button>
-        <button onClick={() => deleteItem(details.id)}>Delete</button>
+        <textarea rows="4" cols="50" 
+            type="text"
+            aria-label="Comments"
+            value={newComments}
+            onChange={(event) =>
+                { setNewComments(event.target.value) }
+            }>
+        </textarea>
+
+        <button onClick={submitItem}>Add Item</button>
+        {/* <button onClick={history.push("/list")}>Cancel</button> */}
         </>
     );
 }
 
-export default DetailsView;
+export default AddItem;
