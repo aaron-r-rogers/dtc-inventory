@@ -8,7 +8,7 @@ import designers from './designers.reducer';
 import materials from './materials.reducer';
 import imagePath from './upload.reducer';
 import newItemDimensionsReducer from './newItemDimensions.reducer';
-
+import dimensions from './dimensions.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,7 +25,8 @@ const rootReducer = combineReducers({
   designers, // all of the designers to make a dropdown in details edit
   materials, // all of the materials to make a dropdown in details edit
   imagePath, // image path to be sent to database
-  newItemDimensionsReducer
+  newItemDimensionsReducer, // stores dimensions when new item is added
+  dimensions // stores dimensions for details edit
 });
 
 export default rootReducer;

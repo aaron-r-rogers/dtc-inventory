@@ -54,7 +54,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4} >
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Min Width"
             type="text"
             value={minW} 
@@ -66,7 +66,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4}>
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Max Width"
             type="text"
             value={maxW} 
@@ -81,7 +81,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4} >
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Min Depth"
             type="text"
             value={minD} 
@@ -93,7 +93,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4}>
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Max Depth"
             type="text" 
             value={maxD}
@@ -108,7 +108,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4}>
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Min Height"
             type="text"
             value={minH} 
@@ -120,7 +120,7 @@ function DimensionFilter () {
         </Grid>
         <Grid item xs={4}>
         <TextField
-            sx={{ m:1, width: 120 }}
+            sx={{ m:1, width: 100 }}
             // label="Max Height"
             type="text" 
             value={maxH}
@@ -129,7 +129,7 @@ function DimensionFilter () {
         </Grid>
         </Grid>
         
-        <Grid item xs={6} sm={4} sx={{ alignSelf: "center" }}>
+        <Grid container justifyContent = "center">
         <Button
             variant="contained"
             onClick={() => {

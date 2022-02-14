@@ -11,7 +11,6 @@ import ItemCard from '../ItemCard/ItemCard';
 //MUI imports
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
@@ -110,7 +109,7 @@ function ListView () {
         
         <DimensionFilter />
         
-        <Grid item xs={8} sm={6}>
+        <Grid container justifyContent = "center">
         <Button
             variant="contained"
             onClick={() => {
