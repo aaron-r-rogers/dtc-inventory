@@ -10,6 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 
 
@@ -119,8 +122,16 @@ function Admin() {
 
     return (
     <>
-    <h3>DELETE</h3>
-    <p>Material:</p>
+    <Typography 
+        variant="h5"
+        gutterBottom
+        sx={{ fontWeight: "bold" }}
+    >
+        DELETE
+    </Typography>
+
+
+    <Typography variant="h6">Material</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="multiple-material-label">Material</InputLabel>
         <Select
@@ -143,8 +154,8 @@ function Admin() {
             ))}
         </Select>
         </FormControl>
-        <button onClick={handleDeleteMaterial}>Delete Material</button>
-        <p>Designer:</p>
+        <Button variant="contained" onClick={handleDeleteMaterial}>Delete Material</Button>
+        <Typography variant="h6">Designer</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-designer">Designer</InputLabel>
         <Select
@@ -166,8 +177,8 @@ function Admin() {
             ))}
         </Select>
         </FormControl>
-        <button onClick={handleDeleteDesigner}>Delete Designer</button>
-        <p>Category:</p>
+        <Button variant="contained" onClick={handleDeleteDesigner}>Delete Designer</Button>
+        <Typography variant="h6">Category</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
         <Select
@@ -189,8 +200,16 @@ function Admin() {
             ))}
         </Select>
         </FormControl>
-        <button onClick={handleDeleteCategory}>Delete Category</button>
-    <h3>ADD</h3>
+        <Button variant="contained" onClick={handleDeleteCategory}>Delete Category</Button>
+    
+    
+    <Typography
+        variant="h5"
+        gutterBottom
+        sx={{ fontWeight: "bold" }}
+    >
+        ADD
+    </Typography>
     <Box noValidate autoComplete="off">
         <FormControl sx={{ width: '25ch' }}>
         <TextField
@@ -204,9 +223,9 @@ function Admin() {
         />
         </FormControl>
     </Box>
-    <button onClick={handleAddMaterial}>Add Material</button>
-    <button onClick={handleAddDesigner}>Add Designer</button>
-    <button onClick={handleAddCategory}>Add Category</button>
+    <Button variant="contained" onClick={handleAddMaterial}>Add Material</Button>
+    <Button variant="contained" onClick={handleAddDesigner}>Add Designer</Button>
+    <Button variant="contained" onClick={handleAddCategory}>Add Category</Button>
     </>
     );
 }

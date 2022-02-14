@@ -27,15 +27,6 @@ const MenuProps = {
     }
 };
 
-function getStyles(material, newMaterial, theme) {
-    return {
-        fontWeight:
-            newMaterial.indexOf(material) === -1
-            ? theme.typography.fontWeightRegular
-            : theme.typography.fontWeightMedium
-    };
-}
-
 function DetailsView() {
 
     const theme = useTheme();
@@ -114,6 +105,7 @@ function DetailsView() {
     };
 
     const submitChanges = () => {
+        console.log('editedItem is:', editedItem);
         dispatch({
             type: 'SEND_FURNITURE_EDIT',
             payload: editedItem
@@ -146,8 +138,6 @@ function DetailsView() {
         });
     }
 
-    deleteItem
-
     return (
         <>
         <img src={`images/${details.path}`}></img>
@@ -172,7 +162,6 @@ function DetailsView() {
                 <MenuItem
                     key={material}
                     value={material}
-                    style={getStyles(material, newMaterial, theme)}
                 >
                 {material}
             </MenuItem>

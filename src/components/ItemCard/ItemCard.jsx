@@ -19,7 +19,7 @@ function ItemCard({item}) {
                 image={`images/${item.path}`}
             />
         <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h5">
                 {item.designerName}
             </Typography>
             <Typography variant="h6" color="text.secondary">

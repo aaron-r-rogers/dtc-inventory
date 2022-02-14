@@ -18,6 +18,7 @@ import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 function ListView () {
     console.log('in ListView');
@@ -70,17 +71,23 @@ function ListView () {
 
     return(
         <>
+        <Container maxWidth="xs">
+        <Box sx={{ width: '100%' }}>
+        <Grid container spacing={2}>
+        <Grid item xs={12}>
         <TextField
-            sx={{ m:1, width: 300 }}
             label="Search"
+            fullWidth
             type="text" 
             value={search} 
             onChange={(event) =>handleSearch(event)} 
         />
-        <br></br>
-        <FormControl sx={{ m: 1, width: 300 }}>
+        </Grid>
+        <Grid item xs={12}>
+        
         <InputLabel id="select-category">Category</InputLabel>
         <Select
+            fullWidth
             labelId="select-category"
             id="select-category"
             value={category}
@@ -98,10 +105,12 @@ function ListView () {
             </MenuItem>
             ))}
         </Select>
-        </FormControl>
-
+        
+        </Grid>
+        
         <DimensionFilter />
-
+        
+        <Grid item xs={8} sm={6}>
         <Button
             variant="contained"
             onClick={() => {
@@ -110,6 +119,11 @@ function ListView () {
             >
             RESET
         </Button>
+        </Grid>
+
+        </Grid>
+        </Box>
+        </Container>
 
         <Box sx={{ width: '100%' }}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

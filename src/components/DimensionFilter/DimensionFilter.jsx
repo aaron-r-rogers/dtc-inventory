@@ -5,6 +5,10 @@ import { useDispatch } from 'react-redux';
 //MUI imports
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 function DimensionFilter () {
     const dispatch = useDispatch();
@@ -41,9 +45,14 @@ function DimensionFilter () {
 
     return(
         <>
-        <br></br>
+        <Container maxWidth="xs">
+        <Box sx={{ width: '100%' }}>
 
-        <p>Width</p>
+        <Grid container spacing={2}>
+        <Grid item xs={2} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">Width</Typography>
+        </Grid>
+        <Grid item xs={4} >
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Min Width"
@@ -51,7 +60,11 @@ function DimensionFilter () {
             value={minW} 
             onChange={(event) =>setMinW(Number(event.target.value))} 
         />
-        <p>to</p>
+        </Grid>
+        <Grid item xs={1} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">to</Typography>
+        </Grid>
+        <Grid item xs={4}>
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Max Width"
@@ -59,9 +72,14 @@ function DimensionFilter () {
             value={maxW} 
             onChange={(event) =>setMaxW(Number(event.target.value))} 
         />
-        <br></br>
+        </Grid>
+        </Grid>
 
-        <p>Depth</p>
+        <Grid container spacing={2}>
+        <Grid item xs={2} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">Depth</Typography>
+        </Grid>
+        <Grid item xs={4} >
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Min Depth"
@@ -69,7 +87,11 @@ function DimensionFilter () {
             value={minD} 
             onChange={(event) =>setMinD(Number(event.target.value))} 
         />
-        <p>to</p>
+        </Grid>
+        <Grid item xs={1} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">to</Typography>
+        </Grid>
+        <Grid item xs={4}>
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Max Depth"
@@ -77,9 +99,14 @@ function DimensionFilter () {
             value={maxD}
             onChange={(event) =>setMaxD(Number(event.target.value))} 
         />
-        <br></br>
+        </Grid>
+        </Grid>
 
-        <p>Height</p>
+        <Grid container spacing={2}>
+        <Grid item xs={2} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">Height</Typography>
+        </Grid>
+        <Grid item xs={4}>
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Min Height"
@@ -87,7 +114,11 @@ function DimensionFilter () {
             value={minH} 
             onChange={(event) =>setMinH(Number(event.target.value))} 
         />
-        <p>to</p>
+        </Grid>
+        <Grid item xs={1} sx={{ alignSelf: "center" }}>
+        <Typography variant="h6">to</Typography>
+        </Grid>
+        <Grid item xs={4}>
         <TextField
             sx={{ m:1, width: 120 }}
             // label="Max Height"
@@ -95,8 +126,10 @@ function DimensionFilter () {
             value={maxH}
             onChange={(event) =>setMaxH(Number(event.target.value))} 
         />
-        <br></br>
+        </Grid>
+        </Grid>
         
+        <Grid item xs={6} sm={4} sx={{ alignSelf: "center" }}>
         <Button
             variant="contained"
             onClick={() => {
@@ -105,6 +138,10 @@ function DimensionFilter () {
             >
             Apply
         </Button>
+        </Grid>
+
+        </Box>
+        </Container>
         </>
     )
 }
