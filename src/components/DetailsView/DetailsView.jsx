@@ -1,9 +1,8 @@
 // external imports
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 // MUI imports
@@ -45,6 +44,7 @@ function DetailsView() {
     // Hooks
     const dispatch = useDispatch();
     const params = useParams();
+    const history = useHistory();
 
     // Redux
     const details = useSelector((store) => store.details);
@@ -97,7 +97,11 @@ function DetailsView() {
             type: 'FETCH_DETAILS',
             payload: params.id
         });
-    }, [params.id]);
+        setNewDesigner(details.designerName);
+        setNewComments(details.comments);
+        setNewCategory(details.categoryName);
+        setNewMaterial(details.material);
+    }, [params.id, editable]);
 
     const handleChange = (event) => {
         const {
@@ -136,6 +140,8 @@ function DetailsView() {
                     payload: id
                 });
                 Swal.fire('Deleted!', 'The item has been deleted.', 'success');
+                history.push('/list');
+
             }
         });
     }

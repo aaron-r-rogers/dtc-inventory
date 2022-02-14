@@ -42,6 +42,7 @@ function AddItem() {
 
     // Hooks
     const dispatch = useDispatch();
+    const history = useHistory();
 
     // Redux store
     const categories = useSelector((store) => store.categories);
@@ -121,6 +122,12 @@ function AddItem() {
             type: 'SEND_NEW_ITEM',
             payload: newItem
         });
+        Swal.fire(
+            'Success!',
+            'The item has been added.',
+            'success'
+        );
+        history.push('/list');
     }
 
     return (
@@ -144,6 +151,7 @@ function AddItem() {
             id="demo-multiple-material"
             //multiple
             value={newMaterial}
+            required
             onChange={handleChange}
             input={<OutlinedInput label="material" />}
             MenuProps={MenuProps}
@@ -188,6 +196,7 @@ function AddItem() {
         <Select
             labelId="select-category"
             id="select-category"
+            required
             value={newCategory}
             onChange={(event) =>
                 { setNewCategory(event.target.value) }
