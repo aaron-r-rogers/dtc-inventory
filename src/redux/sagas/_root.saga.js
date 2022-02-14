@@ -12,6 +12,15 @@ import designersSaga from './designers.saga';
 import materialsSaga from './materials.saga';
 import detailsEditSaga from './detailsEdit.saga';
 import furnitureMaterialsSaga from './furnitureMaterials.saga';
+import uploadSaga from './upload.saga';
+import addNewItemSaga from './addItem.saga';
+import deleteItemSaga from './delete.saga';
+import addNewDesignerSaga from './addDesigner.saga';
+import addNewCategorySaga from './addCategory.saga';
+import addNewMaterialSaga from './addMaterial.saga';
+import deleteMaterialSaga from './deleteMaterial.saga';
+import deleteCategorySaga from './deleteCategory.saga';
+import deleteDesignerSaga from './deleteDesigner.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -35,5 +44,14 @@ export default function* rootSaga() {
     materialsSaga(),
     detailsEditSaga(),
     furnitureMaterialsSaga(),
+    uploadSaga(),
+    addNewItemSaga(),
+    deleteItemSaga(),
+    addNewDesignerSaga(),
+    addNewMaterialSaga(),
+    addNewCategorySaga(),
+    deleteMaterialSaga(),
+    deleteDesignerSaga(),
+    deleteCategorySaga()
   ]);
 }

@@ -13,18 +13,20 @@ router.put('/', (req, res) => {
             "dimMaxD" = $5,
             "dimMaxH" = $6,
             "comments" = $7,
-            "categoryId" = $8,
-            "designerId" = $9
+            "categoryId" = (SELECT "id" FROM "category"
+		        WHERE "category"."name" = $8),
+            "designerId" = (SELECT "id" FROM "designer"
+            WHERE "designer"."name" = $9)
         WHERE "furniture"."id" = $10;
     `;
 
     const queryParams = [
-        req.body.dimMinW,
-        req.body.dimMinD,
-        req.body.dimMinH,
-        req.body.dimMaxW,
-        req.body.dimMaxD,
-        req.body.dimMaxH,
+        Number(req.body.dimMinW),
+        Number(req.body.dimMinD),
+        Number(req.body.dimMinH),
+        Number(req.body.dimMaxW),
+        Number(req.body.dimMaxD),
+        Number(req.body.dimMaxH),
         req.body.comments,
         req.body.category,
         req.body.designer,
@@ -55,11 +57,14 @@ router.post('/', (req, res) => {
 
     pool
     .query(queryText, queryParams)
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-        console.log('Edit furnitureMaterials failed: ', err);
-        res.sendStatus(500);
-    });
+    .then((dbRes) => {
+            console.log(`Added item database`);
+            res.sendStatus(201); 
+        })
+        .catch((error) => {
+            console.log(`Error adding item to database`);
+            res.sendStatus(500);
+        })
 });
 
 module.exports = router;

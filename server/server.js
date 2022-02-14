@@ -17,6 +17,9 @@ const detailsRouter = require('./routes/details.router');
 const designersRouter = require('./routes/designers.router');
 const materialsRouter = require('./routes/materials.router');
 const detailsEditRouter = require('./routes/detailsEdit.router');
+const uploadRouter = require('./routes/upload.router');
+const addItemRouter = require('./routes/addItem.router');
+const deleteRouter = require('./routes/delete.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -39,6 +42,9 @@ app.use('/api/details', detailsRouter);
 app.use('/api/designers', designersRouter);
 app.use('/api/materials', materialsRouter);
 app.use('/api/edit', detailsEditRouter);
+app.use('/api/upload', uploadRouter);
+app.use('/api/add', addItemRouter);
+app.use('/api/delete', deleteRouter);
 
 // Serve static files
 app.use(express.static('build'));
