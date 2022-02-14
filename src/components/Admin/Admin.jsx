@@ -1,8 +1,5 @@
-// external imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
 
 // MUI imports
 import Select from "@mui/material/Select";
@@ -11,9 +8,10 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
-// internal imports
-import AddDimensions from '../AddDimensions/AddDimensions';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -35,64 +33,19 @@ function getStyles(material, newMaterial, theme) {
     };
 }
 
-function AddItem() {
+function Admin() {
 
     const theme = useTheme();
-    const Swal = require('sweetalert2')
-
-    // Hooks
     const dispatch = useDispatch();
 
-    // Redux store
     const categories = useSelector((store) => store.categories);
     const designers = useSelector((store) => store.designers);
     const materials = useSelector((store) => store.materials);
-    const imagePath = useSelector((store) => store.imagePath);
-    const newDimensions = useSelector((store) => store.newItemDimensionsReducer);
 
-    // State
     const [newDesigner, setNewDesigner] = useState('');
-    const [newComments, setNewComments] = useState('');
     const [newCategory, setNewCategory] = useState('');
     const [newMaterial, setNewMaterial] = useState('');
-    const [fileData, setFileData] = useState();
-
-    const fileChangeHandler = (evt) => {
-        setFileData(evt.target.files[0])
-    }
-
-    const onSubmitHandler = (evt) => {
-        evt.preventDefault();
-
-        Swal.fire(
-            'Upload success!',
-            'Complete the form to commit to database.',
-            'success'
-        );
-
-        const data = new FormData();
-
-        data.append('image', fileData)
-
-        dispatch({
-            type:'UPLOAD',
-            payload: data
-        })
-    }
-
-    const newItem = {
-        dimMinW: Number(newDimensions.dimMinW),
-        dimMinD: Number(newDimensions.dimMinD),
-        dimMinH: Number(newDimensions.dimMinH),
-        dimMaxW: Number(newDimensions.dimMaxW),
-        dimMaxD: Number(newDimensions.dimMaxD),
-        dimMaxH: Number(newDimensions.dimMaxH),
-        comments: newComments,
-        category: newCategory,
-        designer: newDesigner,
-        path: imagePath,
-        material: newMaterial
-    }
+    const [valueToAdd, setValueToAdd] = useState('');
 
     useEffect(() => {
         dispatch({
@@ -116,33 +69,64 @@ function AddItem() {
         );
     };
 
-    const submitItem = () => {
+    const handleDeleteMaterial = () => {
+        console.log('in handleDeleteMaterial')
         dispatch({
-            type: 'SEND_NEW_ITEM',
-            payload: newItem
+            type: "DELETE_MATERIAL",
+            payload: newMaterial
         });
-    }
+    };
+
+    const handleDeleteDesigner = () => {
+        console.log('in handleDeleteDesigner')
+        dispatch({
+            type: "DELETE_DESIGNER",
+            payload: newDesigner
+        });
+    };
+
+    const handleDeleteCategory = () => {
+        console.log('in handleDeleteCategory')
+        dispatch({
+            type: "DELETE_CATEGORY",
+            payload: newCategory
+        });
+    };
+    
+    const handleAddMaterial = () => {
+        console.log('in handleAddMaterial')
+        dispatch({
+            type: "ADD_MATERIAL",
+            payload: valueToAdd
+        });
+    };
+    
+    const handleAddDesigner = () => {
+        console.log('in handleAddDesigner')
+        dispatch({
+            type: "ADD_DESIGNER",
+            payload: valueToAdd
+        });
+    };
+    
+    const handleAddCategory = () => {
+        console.log('in handleAddCategory')
+        dispatch({
+            type: "ADD_CATEGORY",
+            payload: valueToAdd
+        });
+    };
 
     return (
-        <>
-        <h2>Add an Item:</h2>
-        <div>
-            <h3>Image Upload</h3>
-            <form  onSubmit={onSubmitHandler} >
-                <br></br>
-                <input type="file" onChange={fileChangeHandler}/>
-                <button type="submit">Submit</button>
-            </form> 
-        </div>
-        <br></br>
-        <p>Material:</p>
-        <div>
+    <>
+    <h3>DELETE</h3>
+    <p>Material:</p>
         <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-material-label">Material</InputLabel>
+        <InputLabel id="multiple-material-label">Material</InputLabel>
         <Select
-            labelId="demo-multiple-material-label"
-            id="demo-multiple-material"
-            //multiple
+            labelId="multiple-material-label"
+            id="multiple-material"
+            // multiple
             value={newMaterial}
             onChange={handleChange}
             input={<OutlinedInput label="material" />}
@@ -159,7 +143,7 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
-        </div>
+        <button onClick={handleDeleteMaterial}>Delete Material</button>
         <p>Designer:</p>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-designer">Designer</InputLabel>
@@ -182,6 +166,7 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
+        <button onClick={handleDeleteDesigner}>Delete Designer</button>
         <p>Category:</p>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
@@ -204,22 +189,26 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
-        <p>Dimensions:</p>
-        <AddDimensions />
-        <p>Comments:</p>
-        <textarea rows="4" cols="50" 
-            type="text"
-            aria-label="Comments"
-            value={newComments}
-            onChange={(event) =>
-                { setNewComments(event.target.value) }
-            }>
-        </textarea>
-
-        <button onClick={submitItem}>Add Item</button>
-        {/* <button onClick={history.push("/list")}>Cancel</button> */}
-        </>
+        <button onClick={handleDeleteCategory}>Delete Category</button>
+    <h3>ADD</h3>
+    <Box noValidate autoComplete="off">
+        <FormControl sx={{ width: '25ch' }}>
+        <TextField
+            label="Value to add"
+            id="value-to-add"
+            value={valueToAdd}
+            variant="outlined"
+            onChange={(event) => 
+                { setValueToAdd(event.target.value) }   
+            }
+        />
+        </FormControl>
+    </Box>
+    <button onClick={handleAddMaterial}>Add Material</button>
+    <button onClick={handleAddDesigner}>Add Designer</button>
+    <button onClick={handleAddCategory}>Add Category</button>
+    </>
     );
 }
 
-export default AddItem;
+export default Admin;

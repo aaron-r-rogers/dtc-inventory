@@ -57,11 +57,14 @@ router.post('/', (req, res) => {
 
     pool
     .query(queryText, queryParams)
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-        console.log('Edit furnitureMaterials failed: ', err);
-        res.sendStatus(500);
-    });
+    .then((dbRes) => {
+            console.log(`Added item database`);
+            res.sendStatus(201); 
+        })
+        .catch((error) => {
+            console.log(`Error adding item to database`);
+            res.sendStatus(500);
+        })
 });
 
 module.exports = router;

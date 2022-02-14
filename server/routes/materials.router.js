@@ -18,11 +18,43 @@ router.get('/', (req, res) => {
     })
 });
 
-/**
- * POST route template
- */
 router.post('/', (req, res) => {
-  // POST route code here
+    console.log('Object.keys(req.body)[0] is', Object.keys(req.body)[0])
+    const queryText = `
+        INSERT INTO "material"("name")
+        VALUES($1);
+    `;
+
+    queryParams = [Object.keys(req.body)[0]]
+
+    pool
+    .query(queryText, queryParams)
+    .then((dbRes) => {
+        console.log(`Added material database`);
+        res.sendStatus(201); 
+    })
+    .catch((error) => {
+        console.log(`Error adding material to database`);
+        res.sendStatus(500);
+    })
+});
+
+router.delete('/:material', (req, res) => {
+    console.log("DELETE material req.params:", req.params);
+    const queryText = `
+        DELETE FROM "material"
+        WHERE "name" = $1;
+    `;
+
+    pool
+    .query(queryText, [req.params.material])
+    .then((result) => {
+        res.sendStatus(201);
+    })
+    .catch((error) => {
+        console.log(`Error on material delete`, error);
+        res.sendStatus(500);
+    });
 });
 
 module.exports = router;

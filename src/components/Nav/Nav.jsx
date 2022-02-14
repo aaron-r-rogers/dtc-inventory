@@ -36,6 +36,10 @@ function Nav() {
               Add
             </Link>
 
+            <Link className="navLink" to="/admin">
+              Admin
+            </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}

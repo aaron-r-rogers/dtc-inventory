@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 // MUI imports
 import Select from "@mui/material/Select";
@@ -39,10 +40,10 @@ function getStyles(material, newMaterial, theme) {
 function DetailsView() {
 
     const theme = useTheme();
+    const Swal = require('sweetalert2')
 
     // Hooks
     const dispatch = useDispatch();
-    //const history = useHistory();
     const params = useParams();
 
     // Redux
@@ -118,6 +119,28 @@ function DetailsView() {
             payload: furnitureMaterials
         });
     }
+
+    const deleteItem = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to undo this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({
+                    type: 'DELETE_ITEM',
+                    payload: id
+                });
+                Swal.fire('Deleted!', 'The item has been deleted.', 'success');
+            }
+        });
+    }
+
+    deleteItem
 
     return (
         <>
@@ -218,7 +241,7 @@ function DetailsView() {
         <button onClick={() => setEditable(true)}>Edit Details</button>
         <button onClick={submitChanges}>Submit Changes</button>
         <button onClick={() => setEditable(false)}>Cancel</button>
-        <button onClick={() => deleteItem(details.id)}>Delete</button>
+        <button onClick={() => deleteItem(params.id)}>Delete</button>
         </>
     );
 }
