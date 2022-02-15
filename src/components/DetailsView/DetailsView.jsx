@@ -45,10 +45,6 @@ function DetailsView() {
 
     // State
     const [editable, setEditable] = useState(false);
-    const [newDesigner, setNewDesigner] = useState(details.designerName);
-    const [newComments, setNewComments] = useState(details.comments);
-    const [newCategory, setNewCategory] = useState(details.categoryName);
-    const [newMaterial, setNewMaterial] = useState([details.material]);
 
     const editedItem = {
         dimMinW: Number(dimensions.dimMinW),
@@ -57,18 +53,20 @@ function DetailsView() {
         dimMaxW: Number(dimensions.dimMaxW),
         dimMaxD: Number(dimensions.dimMaxD),
         dimMaxH: Number(dimensions.dimMaxH),
-        comments: newComments,
-        category: newCategory,
-        designer: newDesigner,
+        comments: details.comments,
+        category: details.categoryName,
+        designer: details.designerName,
         furnitureId: params.id
     }
 
+    // this post is not working
     const furnitureMaterials = {
         furnitureId: params.id,
-        material: newMaterial,
+        material: details.material,
     }
 
     useEffect(() => {
+        console.log('details:', details)
         dispatch({
             type: "FETCH_CATEGORIES",
         });
@@ -82,21 +80,18 @@ function DetailsView() {
             type: 'FETCH_DETAILS',
             payload: params.id
         });
-        setNewDesigner(details.designerName);
-        setNewComments(details.comments);
-        setNewCategory(details.categoryName);
-        setNewMaterial(details.material);
     }, [params.id, editable]);
 
-    const handleChange = (event) => {
-        const {
-            target: { value }
-        } = event;
-        setNewMaterial(
-          // On autofill we get a stringified value.
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
+    // this is reserved for stretch to send multiple materials
+    // const handleChange = (event) => {
+    //     const {
+    //         target: { value }
+    //     } = event;
+    //     setNewMaterial(
+    //       // On autofill we get a stringified value.
+    //         typeof value === "string" ? value.split(",") : value
+    //     );
+    // };
 
     const submitChanges = () => {
         console.log('editedItem is:', editedItem);
@@ -147,12 +142,17 @@ function DetailsView() {
             labelId="multiple-material-label"
             id="multiple-material"
             // multiple
-            value={newMaterial}
-            onChange={handleChange}
+            value={details.material}
+            onChange={(event) =>
+                { dispatch({
+                    type: 'SET_NEW_MATERIAL',
+                    payload: {material: event.target.value}
+                }); }
+            }
             input={<OutlinedInput label="material" />}
             MenuProps={MenuProps}
         >
-            {materials.map((material) => (
+            {materials?.map((material) => (
                 <MenuItem
                     key={material}
                     value={material}
@@ -171,9 +171,12 @@ function DetailsView() {
         <Select
             labelId="select-designer"
             id="select-designer"
-            value={newDesigner}
+            value={details.designerName}
             onChange={(event) =>
-                { setNewDesigner(event.target.value) }
+                { dispatch({
+                    type: 'SET_NEW_DESIGNER',
+                    payload: {designerName: event.target.value}
+                }); }
             }
             input={<OutlinedInput label="Designer" />}
         >
@@ -195,9 +198,12 @@ function DetailsView() {
         <Select
             labelId="select-category"
             id="select-category"
-            value={newCategory}
+            value={details.categoryName}
             onChange={(event) =>
-                { setNewCategory(event.target.value) }
+                { dispatch({
+                    type: 'SET_NEW_CATEGORY',
+                    payload: {categoryName: event.target.value}
+                }); }
             }
             input={<OutlinedInput label="Category" />}
         >
@@ -221,10 +227,14 @@ function DetailsView() {
             <textarea rows="4" cols="50" 
                 type="text"
                 aria-label="Comments"
-                value={newComments}
+                value={details.comments}
                 onChange={(event) =>
-                    { setNewComments(event.target.value) }
-                }>
+                    { dispatch({
+                        type: 'SET_NEW_COMMENTS',
+                        payload: {comments: event.target.value}
+                    }); }
+                }
+            >
             </textarea>
         }
         <button onClick={() => setEditable(true)}>Edit Details</button>

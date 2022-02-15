@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const ITEM_HEIGHT = 48;
@@ -130,7 +130,12 @@ function Admin() {
         DELETE
     </Typography>
 
-
+    <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+    >
     <Typography variant="h6">Material</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="multiple-material-label">Material</InputLabel>
@@ -201,8 +206,14 @@ function Admin() {
         </Select>
         </FormControl>
         <Button variant="contained" onClick={handleDeleteCategory}>Delete Category</Button>
+        </Grid>
     
-    
+    <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+    >
     <Typography
         variant="h5"
         gutterBottom
@@ -211,7 +222,7 @@ function Admin() {
         ADD
     </Typography>
     <Box noValidate autoComplete="off">
-        <FormControl sx={{ width: '25ch' }}>
+        <FormControl sx={{ width: '25ch', mb: 1 }}>
         <TextField
             label="Value to add"
             id="value-to-add"
@@ -223,9 +234,12 @@ function Admin() {
         />
         </FormControl>
     </Box>
-    <Button variant="contained" onClick={handleAddMaterial}>Add Material</Button>
-    <Button variant="contained" onClick={handleAddDesigner}>Add Designer</Button>
-    <Button variant="contained" onClick={handleAddCategory}>Add Category</Button>
+    <ButtonGroup variant="contained" size="small">
+    <Button onClick={handleAddMaterial}>Add Material</Button>
+    <Button onClick={handleAddDesigner}>Add Designer</Button>
+    <Button onClick={handleAddCategory}>Add Category</Button>
+    </ButtonGroup>
+    </Grid>
     </>
     );
 }

@@ -152,7 +152,8 @@ function AddItem() {
             sx={{ my: 3 }}
             direction="column"
             alignItems="center"
-            justifyContent="center">
+            justifyContent="center"
+        >
 
         <Grid item>
         <Typography variant="h6">Material</Typography>
