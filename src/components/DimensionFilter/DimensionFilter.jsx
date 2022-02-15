@@ -29,18 +29,12 @@ function DimensionFilter () {
         maxH: maxH,
     }
 
-    const handleDimensions = (event) =>{
+    const handleDimensions = () =>{
         console.log('dimensions:', dimensions);
         dispatch({
             type: "FETCH_DIMENSIONS",
             payload: dimensions
         });
-        setMaxW(999);
-        setMaxD(999);
-        setMaxH(999);
-        setMinW(1);
-        setMinD(1);
-        setMinH(1);
     };
 
     return(
