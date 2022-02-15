@@ -11,6 +11,10 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
+import TextField from "@mui/material/TextField";
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 // internal imports
 import AddDimensions from '../AddDimensions/AddDimensions';
@@ -132,23 +136,31 @@ function AddItem() {
 
     return (
         <>
-        <h2>Add an Item:</h2>
-        <div>
-            <h3>Image Upload</h3>
+        <Typography gutterBottom variant="h4" align="center">Add an Item</Typography>
+        <Grid container 
+            sx={{ my: 3 }}
+            justifyContent="center"
+        >
+        <Typography gutterBottom variant="h6">Image Upload</Typography>
             <form  onSubmit={onSubmitHandler} >
-                <br></br>
-                <input type="file" onChange={fileChangeHandler}/>
-                <button type="submit">Submit</button>
+                <Button variant="outlined" type="input" onChange={fileChangeHandler}><input type="file" /></Button>
+                <Button variant="contained" type="submit">Upload</Button>
             </form> 
-        </div>
-        <br></br>
-        <p>Material:</p>
-        <div>
+        </Grid>
+
+        <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+
+        <Grid item>
+        <Typography variant="h6">Material</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-material-label">Material</InputLabel>
+        <InputLabel id="multiple-material-label">Material</InputLabel>
         <Select
-            labelId="demo-multiple-material-label"
-            id="demo-multiple-material"
+            labelId="multiple-material-label"
+            id="multiple-material"
             //multiple
             value={newMaterial}
             required
@@ -167,8 +179,10 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
-        </div>
-        <p>Designer:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Designer</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-designer">Designer</InputLabel>
         <Select
@@ -190,7 +204,10 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
-        <p>Category:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Category</Typography>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
         <Select
@@ -213,19 +230,53 @@ function AddItem() {
             ))}
         </Select>
         </FormControl>
-        <p>Dimensions:</p>
+        </Grid>
+
+        </Grid>
+        
+        <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <Typography variant="h6">Dimensions</Typography>
         <AddDimensions />
-        <p>Comments:</p>
-        <textarea rows="4" cols="50" 
+        </Grid>
+
+        <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <Typography variant="h6">Comments</Typography>
+        <TextField
+            sx={{ width: 400 }}
+            multiline 
+            minRows="4" 
             type="text"
             aria-label="Comments"
             value={newComments}
             onChange={(event) =>
                 { setNewComments(event.target.value) }
             }>
-        </textarea>
+        </TextField>
+        </Grid>
 
-        <button onClick={submitItem}>Add Item</button>
+        <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center">
+        <Button 
+            sx={{ width: 150 }}
+            variant="contained" 
+            onClick={submitItem}
+        >
+            Add Item
+        </Button>
+        </Grid>
+
+
         {/* <button onClick={history.push("/list")}>Cancel</button> */}
         </>
     );

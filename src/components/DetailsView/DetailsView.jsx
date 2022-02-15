@@ -1,7 +1,6 @@
 // external imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
@@ -27,15 +26,6 @@ const MenuProps = {
     }
 };
 
-function getStyles(material, newMaterial, theme) {
-    return {
-        fontWeight:
-            newMaterial.indexOf(material) === -1
-            ? theme.typography.fontWeightRegular
-            : theme.typography.fontWeightMedium
-    };
-}
-
 function DetailsView() {
 
     const theme = useTheme();
@@ -51,6 +41,7 @@ function DetailsView() {
     const categories = useSelector((store) => store.categories);
     const designers = useSelector((store) => store.designers);
     const materials = useSelector((store) => store.materials);
+    const dimensions = useSelector((store) => store.dimensions);
 
     // State
     const [editable, setEditable] = useState(false);
@@ -58,20 +49,14 @@ function DetailsView() {
     const [newComments, setNewComments] = useState(details.comments);
     const [newCategory, setNewCategory] = useState(details.categoryName);
     const [newMaterial, setNewMaterial] = useState([details.material]);
-    const [newDimMinW, setNewDimMinW] = useState(details.dimMinW);
-    const [newDimMinD, setNewDimMinD] = useState(details.dimMinD);
-    const [newDimMinH, setNewDimMinH] = useState(details.dimMinH);
-    const [newDimMaxW, setNewDimMaxW] = useState(details.dimMaxW);
-    const [newDimMaxD, setNewDimMaxD] = useState(details.dimMaxD);
-    const [newDimMaxH, setNewDimMaxH] = useState(details.dimMaxH);
 
     const editedItem = {
-        dimMinW: Number(newDimMinW),
-        dimMinD: Number(newDimMinD),
-        dimMinH: Number(newDimMinH),
-        dimMaxW: Number(newDimMaxW),
-        dimMaxD: Number(newDimMaxD),
-        dimMaxH: Number(newDimMaxH),
+        dimMinW: Number(dimensions.dimMinW),
+        dimMinD: Number(dimensions.dimMinD),
+        dimMinH: Number(dimensions.dimMinH),
+        dimMaxW: Number(dimensions.dimMaxW),
+        dimMaxD: Number(dimensions.dimMaxD),
+        dimMaxH: Number(dimensions.dimMaxH),
         comments: newComments,
         category: newCategory,
         designer: newDesigner,
@@ -114,6 +99,7 @@ function DetailsView() {
     };
 
     const submitChanges = () => {
+        console.log('editedItem is:', editedItem);
         dispatch({
             type: 'SEND_FURNITURE_EDIT',
             payload: editedItem
@@ -146,8 +132,6 @@ function DetailsView() {
         });
     }
 
-    deleteItem
-
     return (
         <>
         <img src={`images/${details.path}`}></img>
@@ -172,7 +156,6 @@ function DetailsView() {
                 <MenuItem
                     key={material}
                     value={material}
-                    style={getStyles(material, newMaterial, theme)}
                 >
                 {material}
             </MenuItem>

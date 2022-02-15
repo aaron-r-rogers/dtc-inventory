@@ -1,6 +1,6 @@
 // external imports
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 
 // MUI imports
 import FormControl from "@mui/material/FormControl";
@@ -9,6 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormHelperText from '@mui/material/FormHelperText';
 
 function DetailsDimensions() {
+    const dispatch = useDispatch();
     // Redux
     const details = useSelector((store) => store.details);
     // local state
@@ -18,6 +19,20 @@ function DetailsDimensions() {
     const [newDimMaxW, setNewDimMaxW] = useState(details.dimMaxW);
     const [newDimMaxD, setNewDimMaxD] = useState(details.dimMaxD);
     const [newDimMaxH, setNewDimMaxH] = useState(details.dimMaxH);
+
+    useEffect(() => {
+        dispatch({
+            type: "SET_DIMENSIONS",
+            payload: {
+                dimMinW: Number(newDimMinW),
+                dimMinD: Number(newDimMinD),
+                dimMinH: Number(newDimMinH),
+                dimMaxW: Number(newDimMaxW),
+                dimMaxD: Number(newDimMaxD),
+                dimMaxH: Number(newDimMaxH),
+            }
+        });
+    }, [newDimMinW, newDimMinD, newDimMinH, newDimMaxW, newDimMaxD, newDimMaxH]);
 
     return (
     <>

@@ -15,14 +15,14 @@ function ItemCard({item}) {
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
-                max height="300"
+                max height="200"
                 image={`images/${item.path}`}
             />
         <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6">
                 {item.designerName}
             </Typography>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="subtitle1" color="text.secondary">
                 {item.material}
             </Typography>
         </CardContent>

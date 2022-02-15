@@ -11,13 +11,13 @@ import ItemCard from '../ItemCard/ItemCard';
 //MUI imports
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 function ListView () {
     console.log('in ListView');
@@ -54,12 +54,17 @@ function ListView () {
         dispatch({
             type: "FETCH_CATEGORIES",
         });
-        setMaxW(999);
-        setMaxD(999);
-        setMaxH(999);
-        setMinW(1);
-        setMinD(1);
-        setMinH(1);
+        dispatch({
+            type: "FETCH_DIMENSIONS",
+            payload: dimensions = {
+                minW: 1,
+                minD: 1,
+                minH: 1,
+                maxW: 999,
+                maxD: 999,
+                maxH: 999
+            }
+        });
     }
 
     const handleSearch = (event) =>{
@@ -70,17 +75,23 @@ function ListView () {
 
     return(
         <>
+        <Container maxWidth="xs">
+        <Box sx={{ width: '100%' }}>
+        <Grid container spacing={2}>
+        <Grid item xs={12}>
         <TextField
-            sx={{ m:1, width: 300 }}
             label="Search"
+            fullWidth
             type="text" 
             value={search} 
             onChange={(event) =>handleSearch(event)} 
         />
-        <br></br>
-        <FormControl sx={{ m: 1, width: 300 }}>
+        </Grid>
+        <Grid item xs={12}>
+        
         <InputLabel id="select-category">Category</InputLabel>
         <Select
+            fullWidth
             labelId="select-category"
             id="select-category"
             value={category}
@@ -98,10 +109,12 @@ function ListView () {
             </MenuItem>
             ))}
         </Select>
-        </FormControl>
-
+        
+        </Grid>
+        
         <DimensionFilter />
-
+        
+        <Grid container justifyContent = "center">
         <Button
             variant="contained"
             onClick={() => {
@@ -110,6 +123,11 @@ function ListView () {
             >
             RESET
         </Button>
+        </Grid>
+
+        </Grid>
+        </Box>
+        </Container>
 
         <Box sx={{ width: '100%' }}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
