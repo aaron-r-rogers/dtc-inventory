@@ -11,6 +11,12 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import TextField from '@mui/material/TextField';
+
 
 // internal imports
 import DetailsDimensions from '../DetailsDimensions/DetailsDimensions';
@@ -42,6 +48,7 @@ function DetailsView() {
     const designers = useSelector((store) => store.designers);
     const materials = useSelector((store) => store.materials);
     const dimensions = useSelector((store) => store.dimensions);
+    const user = useSelector(store => store.user);
 
     // State
     const [editable, setEditable] = useState(false);
@@ -94,7 +101,11 @@ function DetailsView() {
     // };
 
     const submitChanges = () => {
-        console.log('editedItem is:', editedItem);
+        Swal.fire(
+            'Success!',
+            'This item has been updated.',
+            'success'
+        );
         dispatch({
             type: 'SEND_FURNITURE_EDIT',
             payload: editedItem
@@ -103,7 +114,8 @@ function DetailsView() {
             type: 'SEND_MATERIALS_EDIT',
             payload: furnitureMaterials
         });
-    }
+        setEditable(false);
+    };
 
     const deleteItem = (id) => {
         Swal.fire({
@@ -130,11 +142,15 @@ function DetailsView() {
     return (
         <>
         <img src={`images/${details.path}`}></img>
-        <br></br>
-        <p>Material:</p>
+        <Grid container spacing={2} sx={{ mx: 1 }}>
+
+        <Grid item>
+        <Typography variant="h6">Material:</Typography>
         {editable === false ?
-        <p>{details.material?.join(', ')}</p> :
         
+        <Typography variant="body1">{details.material?.join(', ')}</Typography>
+    
+        :
         <div>
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="multiple-material-label">Material</InputLabel>
@@ -145,8 +161,8 @@ function DetailsView() {
             value={details.material}
             onChange={(event) =>
                 { dispatch({
-                    type: 'SET_NEW_MATERIAL',
-                    payload: {material: event.target.value}
+                    type: 'SET_NEW_INFORMATION',
+                    payload: {material: [event.target.value]}
                 }); }
             }
             input={<OutlinedInput label="material" />}
@@ -163,9 +179,12 @@ function DetailsView() {
         </Select>
         </FormControl>
         </div>}
-        <p>Designer:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Designer:</Typography>
         {editable === false ?
-        <p>{details.designerName}</p> :
+        <Typography variant="body1">{details.designerName}</Typography> :
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-designer">Designer</InputLabel>
         <Select
@@ -174,7 +193,7 @@ function DetailsView() {
             value={details.designerName}
             onChange={(event) =>
                 { dispatch({
-                    type: 'SET_NEW_DESIGNER',
+                    type: 'SET_NEW_INFORMATION',
                     payload: {designerName: event.target.value}
                 }); }
             }
@@ -190,9 +209,12 @@ function DetailsView() {
             ))}
         </Select>
         </FormControl>}
-        <p>Category:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Category:</Typography>
         {editable === false ?
-            <p>{details.categoryName}</p> :
+            <Typography variant="body1">{details.categoryName}</Typography> :
         <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="select-category">Category</InputLabel>
         <Select
@@ -201,7 +223,7 @@ function DetailsView() {
             value={details.categoryName}
             onChange={(event) =>
                 { dispatch({
-                    type: 'SET_NEW_CATEGORY',
+                    type: 'SET_NEW_INFORMATION',
                     payload: {categoryName: event.target.value}
                 }); }
             }
@@ -217,30 +239,60 @@ function DetailsView() {
             ))}
         </Select>
         </FormControl>}
-        <p>Dimensions:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Dimensions:</Typography>
         {editable === false ?
-        <p>{details.dimMinW}" x {details.dimMinD}" x {details.dimMinH}"</p> :
+        <Typography variant="body1">{details.dimMinW}" x {details.dimMinD}" x {details.dimMinH}"</Typography> :
         <DetailsDimensions />}
-        <p>Comments:</p>
+        </Grid>
+
+        <Grid item>
+        <Typography variant="h6">Comments:</Typography>
         {editable === false ?
-            <p>{details.comments}</p> :
-            <textarea rows="4" cols="50" 
+            <Typography variant="body1">{details.comments}</Typography> :
+            <TextField
+                sx={{ width: 340 }} 
+                multiline
+                rows={4} 
                 type="text"
                 aria-label="Comments"
                 value={details.comments}
                 onChange={(event) =>
                     { dispatch({
-                        type: 'SET_NEW_COMMENTS',
+                        type: 'SET_NEW_INFORMATION',
                         payload: {comments: event.target.value}
                     }); }
                 }
             >
-            </textarea>
+            </TextField>
         }
-        <button onClick={() => setEditable(true)}>Edit Details</button>
-        <button onClick={submitChanges}>Submit Changes</button>
-        <button onClick={() => setEditable(false)}>Cancel</button>
-        <button onClick={() => deleteItem(params.id)}>Delete</button>
+        </Grid>
+
+        </Grid>
+
+
+        {user.authLevel === 'admin' ?
+        <Grid container spacing={0} 
+            sx={{ my: 3 }}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+        >
+            {editable === false ?
+            <ButtonGroup variant="contained">
+                <Button onClick={() => setEditable(true)}>Edit Details</Button> 
+            </ButtonGroup>
+            :
+            <ButtonGroup variant="contained">
+                <Button onClick={submitChanges}>Submit Changes</Button>
+                <Button onClick={() => setEditable(false)}>Cancel</Button>
+                <Button onClick={() => deleteItem(params.id)}>Delete</Button>
+            </ButtonGroup>
+            }
+        </Grid>
+        :   <div></div>}
         </>
     );
 }

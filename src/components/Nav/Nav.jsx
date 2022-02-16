@@ -21,8 +21,8 @@ function Nav() {
           </Link>
         )}
 
-        {/* If a user is logged in, show these links */}
-        {user.id && (
+        {/* If a user has admin access, show these links */}
+        {user.authLevel === 'admin' && (
           <>
             <Link className="navLink" to="/list">
               Home
@@ -34,6 +34,17 @@ function Nav() {
 
             <Link className="navLink" to="/admin">
               Admin
+            </Link>
+
+            <LogOutButton className="navLink" />
+          </>
+        )}
+
+        {/* If a user has guest access, show these links */}
+        {user.authLevel === 'guest' && (
+          <>
+            <Link className="navLink" to="/list">
+              Home
             </Link>
 
             <LogOutButton className="navLink" />

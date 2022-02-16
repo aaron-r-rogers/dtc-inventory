@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* sendNewDesigner(action) {
     try {
-        yield axios.post(`/api/designers'/${action.payload}`);
+        yield axios.post('/api/designers', action.payload);
 
     } catch (error) {
         console.log('Add item failed', error);

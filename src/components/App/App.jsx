@@ -146,13 +146,13 @@ function App() {
             exact
             path="/add"
           >
-            {user.id ?
+            {user.authLevel === 'admin' ?
               // If the user is already logged in, 
               // go to AddItem
               <AddItem />
               :
-              // Otherwise, go to register
-              <Redirect to="/register" />
+              // Otherwise, go to list
+              <Redirect to="/list" />
             }
           </Route>
 
@@ -160,19 +160,21 @@ function App() {
             exact
             path="/admin"
           >
-            {user.id ?
+            {user.authLevel === 'admin' ?
               // If the user is already logged in, 
               // go to Admin
               <Admin />
               :
               // Otherwise, go to register
-              <Redirect to="/register" />
+              <Redirect to="/list" />
             }
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
-          <Route>
-            <h1>404</h1>
+          <Route 
+            exact
+            path="/login"
+          >
           </Route>
         </Switch>
         <Footer />
