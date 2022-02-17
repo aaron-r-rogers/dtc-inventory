@@ -20,12 +20,12 @@ router.get('/', (req, res) => {
         ON "furnitureMaterials"."furnitureId" = "furniture"."id"
     JOIN "material"
         ON "material"."id" = "furnitureMaterials"."materialId"
-    WHERE $1 < "dimMinW" AND "dimMinW" < $2
-        OR $1 < "dimMaxW" AND "dimMinW" < $2
-        AND $3 < "dimMinD" AND "dimMinD" < $4 
-        OR $3 < "dimMaxD" AND "dimMinD" < $4
-        AND $5 < "dimMinH" AND "dimMinH" < $6
-        OR $5 < "dimMaxH" AND "dimMinH" < $6
+    WHERE ("dimMinW" BETWEEN $1 AND $2 
+        OR ("dimMaxW" != 0 AND "dimMaxW" BETWEEN $1 AND $2))
+        AND ("dimMinD" BETWEEN $3 AND $4 
+        OR ("dimMaxD" != 0 AND "dimMaxD" BETWEEN $3 AND $4))
+        AND ("dimMinH" BETWEEN $5 AND $6
+        OR ("dimMaxH" != 0 AND "dimMaxH" BETWEEN $5 AND $6))
     GROUP BY "furniture"."id", "path", "designer"."name", "dateUpdate", "category"."name"
     ORDER BY "dateUpdate" DESC;
     `;

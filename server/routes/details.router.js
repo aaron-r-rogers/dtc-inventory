@@ -37,8 +37,8 @@ router.get('/:id', (req, res) => {
 
     pool.query(queryText, queryParams)
     .then(dbRes => {
-        console.log('dbRes.rows in details router is:', dbRes.rows);
-        res.send(dbRes.rows)
+        console.log('dbRes.rows[0] in details router is:', dbRes.rows[0]);
+        res.send(dbRes.rows[0])
     }).catch(err => {
         console.error('err in get search', err);
         res.sendStatus(500);

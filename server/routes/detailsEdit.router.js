@@ -14,7 +14,7 @@ router.put('/', (req, res) => {
             "dimMaxH" = $6,
             "comments" = $7,
             "categoryId" = (SELECT "id" FROM "category"
-		        WHERE "category"."name" = $8),
+                WHERE "category"."name" = $8),
             "designerId" = (SELECT "id" FROM "designer"
             WHERE "designer"."name" = $9)
         WHERE "furniture"."id" = $10;
@@ -42,21 +42,31 @@ router.put('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     
-    const queryText = `
+    const deleteQueryText = `
+        DELETE FROM "furnitureMaterials"
+        WHERE "material"."name" = $1;
+    `;
+
+    const deleteQueryParams = [
+        req.body.furnitureId,
+    ]
+
+    await pool.query(deleteQueryText, deleteQueryParams);
+
+    const insertQueryText = `
         INSERT INTO "furnitureMaterials"("furnitureId", "materialId")
         VALUES ($1, (SELECT "material"."id" FROM "material"
         WHERE "material"."name" = '$2'));
     `;
 
-    const queryParams = [
+    const insertQueryParams = [
         req.body.furnitureId,
         req.body.material
     ]
 
-    pool
-    .query(queryText, queryParams)
+    await pool.query(insertQueryText, insertQueryParams)
     .then((dbRes) => {
             console.log(`Added item database`);
             res.sendStatus(201); 

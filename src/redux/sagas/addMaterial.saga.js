@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* sendNewMaterial(action) {
     try {
-        yield yield axios.post(`/api/materials'/${action.payload}`);
+        yield yield axios.post('/api/materials', action.payload);
 
     } catch (error) {
         console.log('Add item failed', error);
