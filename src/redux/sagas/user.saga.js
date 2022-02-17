@@ -29,7 +29,7 @@ function* fetchAllUsers(action) {
       let allUsers = yield axios.get('/api/admin');
       yield put({
           type: 'SET_ALL_USERS',
-          payload: allUsers.data
+          payload: allUsers
       })
   } catch (error) {
       console.log('Error fetching all users:', error);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // MUI imports
 import Grid from '@mui/material/Grid';
@@ -25,16 +25,18 @@ const columns = [
 
 function Users() {
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch({
             type: "FETCH_ALL_USERS",
         });
     }, []);
+
     const users = useSelector((store) => store.admin);
 
     return (
     <>
-    <div><span>
     <Grid container spacing={0} 
             sx={{ my: 3 }}
             direction="column"
@@ -52,22 +54,22 @@ function Users() {
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 250 }}>
         <TableHead>
-            <TableRow>{columns.map(col => 
-                <TableCell key={col.heading}>
+            <TableRow>{columns?.map(col => 
+                <TableCell key={`thead-${col.heading}`}>
                     {col.heading}
                 </TableCell>)}
             </TableRow>
         </TableHead>
         <TableBody>
-            {users.map(user =>
+            {users?.map(user =>
             <TableRow 
                 sx={{ '&:last-child td, &:last-child th': 
                     { border: 0 } }} 
-                key={user.id}>
+                key={`${user.id}-row`}>
                 
-                {columns.map(col => 
+                {columns?.map(col => 
                     <TableCell 
-                        key={user.id}>
+                        key={`${user.id}-${col.property}`}>
                             {user[col.property]}
                     </TableCell>)}
             </TableRow>
@@ -77,7 +79,7 @@ function Users() {
     </TableContainer>
 
     </Grid>
-    </span></div>
+
     </>
     );
 }
