@@ -24,6 +24,8 @@ import DetailsView from '../DetailsView/DetailsView';
 import AddItem from '../AddItem/AddItem';
 import Admin from '../Admin/Admin';
 
+import CssBaseline from '@mui/material/CssBaseline';
+
 import './App.css';
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
 
   return (
     <Router>
+      <CssBaseline>
       <div>
         <Nav />
         <Switch>
@@ -79,7 +82,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/list" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -93,7 +96,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/list" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -107,7 +110,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/list" />
               :
               // Otherwise, show the Landing page
               <LandingPage />
@@ -124,7 +127,7 @@ function App() {
               <ListView />
               :
               // Otherwise, go to register
-              <Redirect to="/register" />
+              <Redirect to="/registration" />
             }
           </Route>
 
@@ -138,7 +141,7 @@ function App() {
               <DetailsView />
               :
               // Otherwise, go to register
-              <Redirect to="/register" />
+              <Redirect to="/registration" />
             }
           </Route>
 
@@ -165,7 +168,7 @@ function App() {
               // go to Admin
               <Admin />
               :
-              // Otherwise, go to register
+              // Otherwise, go to list
               <Redirect to="/list" />
             }
           </Route>
@@ -179,6 +182,7 @@ function App() {
         </Switch>
         <Footer />
       </div>
+      </CssBaseline>
     </Router>
   );
 }

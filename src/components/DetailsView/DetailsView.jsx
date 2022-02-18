@@ -17,7 +17,6 @@ import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
 
-
 // internal imports
 import DetailsDimensions from '../DetailsDimensions/DetailsDimensions';
 
@@ -66,7 +65,6 @@ function DetailsView() {
         furnitureId: params.id
     }
 
-    // this post is not working
     const furnitureMaterials = {
         furnitureId: params.id,
         material: details.material,
@@ -75,6 +73,10 @@ function DetailsView() {
     useEffect(() => {
         console.log('details:', details)
         dispatch({
+            type: 'FETCH_DETAILS',
+            payload: Number(params.id)
+        });
+        dispatch({
             type: "FETCH_CATEGORIES",
         });
         dispatch({
@@ -82,10 +84,6 @@ function DetailsView() {
         });
         dispatch({
             type: "FETCH_MATERIALS",
-        });
-        dispatch({
-            type: 'FETCH_DETAILS',
-            payload: params.id
         });
     }, [params.id, editable]);
 
@@ -113,6 +111,10 @@ function DetailsView() {
         dispatch({
             type: 'SEND_MATERIALS_EDIT',
             payload: furnitureMaterials
+        });
+        dispatch({
+            type: 'FETCH_DETAILS',
+            payload: Number(params.id)
         });
         setEditable(false);
     };

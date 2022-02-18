@@ -11,17 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
-const columns = [
-    {
-    heading: 'Username',
-    property: 'username'
-    },
-    {
-    heading: 'Authorization',
-    property: 'authLevel'
-    },
-]
 
 function Users() {
 
@@ -34,6 +25,23 @@ function Users() {
     }, []);
 
     const users = useSelector((store) => store.admin);
+
+    const updateAuth = (user) =>{
+        let newAuth
+        if (user.authLevel === 'guest') {
+            newAuth = 'admin'
+        }
+        else if (user.authLevel === 'admin') {
+            newAuth = 'guest'
+        }
+        dispatch({
+            type: "UPDATE_USER_AUTH",
+            payload: {
+                id: user.id,
+                authLevel: newAuth
+            }
+        });
+    };
 
     return (
     <>
@@ -54,24 +62,27 @@ function Users() {
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 250 }}>
         <TableHead>
-            <TableRow>{columns?.map(col => 
-                <TableCell key={`thead-${col.heading}`}>
-                    {col.heading}
-                </TableCell>)}
+            <TableRow> 
+                <TableCell>Username</TableCell>
+                <TableCell>Authorization</TableCell>
+                <TableCell>Manage Auth</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
             {users?.map(user =>
-            <TableRow 
-                sx={{ '&:last-child td, &:last-child th': 
-                    { border: 0 } }} 
-                key={`${user.id}-row`}>
-                
-                {columns?.map(col => 
-                    <TableCell 
-                        key={`${user.id}-${col.property}`}>
-                            {user[col.property]}
-                    </TableCell>)}
+            <TableRow
+                key={user.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.authLevel}</TableCell>
+                <TableCell>
+                    <Button 
+                        variant="contained"
+                        size="small"
+                        onClick={event => updateAuth(user)}>Toggle
+                    </Button>
+                </TableCell>
             </TableRow>
             )}
         </TableBody>
