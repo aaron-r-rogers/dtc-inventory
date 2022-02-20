@@ -192,6 +192,7 @@ function DetailsView() {
         <Select
             labelId="select-designer"
             id="select-designer"
+            MenuProps={MenuProps}
             value={details.designerName}
             onChange={(event) =>
                 { dispatch({
@@ -222,6 +223,7 @@ function DetailsView() {
         <Select
             labelId="select-category"
             id="select-category"
+            MenuProps={MenuProps}
             value={details.categoryName}
             onChange={(event) =>
                 { dispatch({

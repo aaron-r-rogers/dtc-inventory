@@ -13,6 +13,7 @@ router.put('/', (req, res) => {
             "dimMaxD" = $5,
             "dimMaxH" = $6,
             "comments" = $7,
+            "dateUpdate" = CURRENT_TIMESTAMP(2),
             "categoryId" = (SELECT "id" FROM "category"
                 WHERE "category"."name" = $8),
             "designerId" = (SELECT "id" FROM "designer"
