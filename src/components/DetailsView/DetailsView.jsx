@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 // MUI imports
 import Select from "@mui/material/Select";
@@ -16,7 +16,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
-
 
 // internal imports
 import DetailsDimensions from '../DetailsDimensions/DetailsDimensions';
@@ -35,7 +34,7 @@ const MenuProps = {
 function DetailsView() {
 
     const theme = useTheme();
-    const Swal = require('sweetalert2')
+    const Swal = require('sweetalert2');
 
     // Hooks
     const dispatch = useDispatch();
@@ -66,7 +65,6 @@ function DetailsView() {
         furnitureId: params.id
     }
 
-    // this post is not working
     const furnitureMaterials = {
         furnitureId: params.id,
         material: details.material,
@@ -75,6 +73,10 @@ function DetailsView() {
     useEffect(() => {
         console.log('details:', details)
         dispatch({
+            type: 'FETCH_DETAILS',
+            payload: Number(params.id)
+        });
+        dispatch({
             type: "FETCH_CATEGORIES",
         });
         dispatch({
@@ -82,10 +84,6 @@ function DetailsView() {
         });
         dispatch({
             type: "FETCH_MATERIALS",
-        });
-        dispatch({
-            type: 'FETCH_DETAILS',
-            payload: params.id
         });
     }, [params.id, editable]);
 
@@ -113,6 +111,10 @@ function DetailsView() {
         dispatch({
             type: 'SEND_MATERIALS_EDIT',
             payload: furnitureMaterials
+        });
+        dispatch({
+            type: 'FETCH_DETAILS',
+            payload: Number(params.id)
         });
         setEditable(false);
     };
@@ -190,6 +192,7 @@ function DetailsView() {
         <Select
             labelId="select-designer"
             id="select-designer"
+            MenuProps={MenuProps}
             value={details.designerName}
             onChange={(event) =>
                 { dispatch({
@@ -220,6 +223,7 @@ function DetailsView() {
         <Select
             labelId="select-category"
             id="select-category"
+            MenuProps={MenuProps}
             value={details.categoryName}
             onChange={(event) =>
                 { dispatch({

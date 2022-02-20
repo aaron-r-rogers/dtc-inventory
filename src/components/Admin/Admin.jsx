@@ -223,6 +223,7 @@ function Admin() {
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
             value={value}
+            variant="fullWidth"
             onChange={handleTabChange}
             aria-label="basic tabs example"
         >

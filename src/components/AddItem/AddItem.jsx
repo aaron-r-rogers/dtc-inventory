@@ -189,6 +189,7 @@ function AddItem() {
         <Select
             labelId="select-designer"
             id="select-designer"
+            MenuProps={MenuProps}
             value={newDesigner}
             onChange={(event) =>
                 { setNewDesigner(event.target.value) }
@@ -214,6 +215,7 @@ function AddItem() {
         <Select
             labelId="select-category"
             id="select-category"
+            MenuProps={MenuProps}
             required
             value={newCategory}
             onChange={(event) =>

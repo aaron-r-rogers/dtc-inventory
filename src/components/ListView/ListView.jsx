@@ -7,6 +7,7 @@ import { useEffect } from "react";
 //internal imports
 import DimensionFilter from '../DimensionFilter/DimensionFilter';
 import ItemCard from '../ItemCard/ItemCard';
+import ReturnToTop from '../ReturnToTop/ReturnToTop';
 
 //MUI imports
 import Select from "@mui/material/Select";
@@ -75,6 +76,8 @@ function ListView () {
 
     return(
         <>
+        <div>
+        <ReturnToTop showBelow={250} />
         <Container maxWidth="xs">
         <Box sx={{ width: '100%' }}>
         <Grid container spacing={2}>
@@ -140,6 +143,7 @@ function ListView () {
                 )}
             </Grid>
         </Box>
+        </div>
         </>
     )
 }

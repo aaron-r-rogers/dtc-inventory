@@ -16,4 +16,26 @@ router.get('/', (req, res) => {
     })
 });
 
+router.put('/', (req, res) => {
+    
+    const queryText = `
+        UPDATE "user"
+        SET "authLevel" = $1
+        WHERE "id" = $2;
+    `;
+
+    const queryParams = [
+        req.body.authLevel,
+        req.body.id
+    ]
+
+    pool
+    .query(queryText, queryParams)
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+        console.log('User auth admin.router PUT endpoint failed: ', err);
+        res.sendStatus(500);
+    });
+})
+
 module.exports = router;

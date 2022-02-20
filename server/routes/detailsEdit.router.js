@@ -13,6 +13,7 @@ router.put('/', (req, res) => {
             "dimMaxD" = $5,
             "dimMaxH" = $6,
             "comments" = $7,
+            "dateUpdate" = CURRENT_TIMESTAMP(2),
             "categoryId" = (SELECT "id" FROM "category"
                 WHERE "category"."name" = $8),
             "designerId" = (SELECT "id" FROM "designer"
@@ -43,14 +44,16 @@ router.put('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    try {
+    console.log('in detailsEdit post, req.body is:', req.body);
     
     const deleteQueryText = `
         DELETE FROM "furnitureMaterials"
-        WHERE "material"."name" = $1;
+        WHERE "furnitureId" = $1;
     `;
 
     const deleteQueryParams = [
-        req.body.furnitureId,
+        Number(req.body.furnitureId),
     ]
 
     await pool.query(deleteQueryText, deleteQueryParams);
@@ -58,12 +61,12 @@ router.post('/', async (req, res) => {
     const insertQueryText = `
         INSERT INTO "furnitureMaterials"("furnitureId", "materialId")
         VALUES ($1, (SELECT "material"."id" FROM "material"
-        WHERE "material"."name" = '$2'));
+        WHERE "material"."name" = $2));
     `;
 
     const insertQueryParams = [
-        req.body.furnitureId,
-        req.body.material
+        Number(req.body.furnitureId),
+        req.body.material[0]
     ]
 
     await pool.query(insertQueryText, insertQueryParams)
@@ -72,9 +75,13 @@ router.post('/', async (req, res) => {
             res.sendStatus(201); 
         })
         .catch((error) => {
-            console.log(`Error adding item to database`);
+            console.log('Error editing item to database', error);
             res.sendStatus(500);
         })
+    }
+    catch (error){
+        console.log('error in details edit router,', error);
+        res.sendStatus(500);
+    }
 });
-
 module.exports = router;
