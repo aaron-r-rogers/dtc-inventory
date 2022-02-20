@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 // MUI imports
 import Select from "@mui/material/Select";
@@ -34,7 +34,7 @@ const MenuProps = {
 function DetailsView() {
 
     const theme = useTheme();
-    const Swal = require('sweetalert2')
+    const Swal = require('sweetalert2');
 
     // Hooks
     const dispatch = useDispatch();

@@ -36,9 +36,21 @@ function* fetchAllUsers(action) {
   }
 }
 
+function* setUserAuth(action) {
+  try {
+      yield axios.put('/api/admin', action.payload);
+      yield put({
+          type: 'FETCH_ALL_USERS',
+      })
+  } catch (error) {
+      console.log('Error updating user auth:', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
-  yield takeLatest('FETCH_ALL_USERS', fetchAllUsers)
+  yield takeLatest('FETCH_ALL_USERS', fetchAllUsers);
+  yield takeLatest('UPDATE_USER_AUTH', setUserAuth);
 }
 
 export default userSaga;

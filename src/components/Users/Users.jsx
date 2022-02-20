@@ -1,5 +1,7 @@
+// External imports
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 // MUI imports
 import Grid from '@mui/material/Grid';
@@ -17,28 +19,42 @@ import Button from '@mui/material/Button';
 function Users() {
 
     const dispatch = useDispatch();
+    const Swal = require('sweetalert2');
 
     useEffect(() => {
         dispatch({
             type: "FETCH_ALL_USERS",
         });
-    }, []);
+    }, [users]);
 
     const users = useSelector((store) => store.admin);
 
     const updateAuth = (user) =>{
         let newAuth
-        if (user.authLevel === 'guest') {
-            newAuth = 'admin'
-        }
-        else if (user.authLevel === 'admin') {
-            newAuth = 'guest'
-        }
-        dispatch({
-            type: "UPDATE_USER_AUTH",
-            payload: {
-                id: user.id,
-                authLevel: newAuth
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are changing authorization and access.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, change auth.'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (user.authLevel === 'guest') {
+                    newAuth = 'admin'
+                }
+                else if (user.authLevel === 'admin') {
+                    newAuth = 'guest'
+                }
+                dispatch({
+                    type: "UPDATE_USER_AUTH",
+                    payload: {
+                        id: user.id,
+                        authLevel: newAuth
+                    }
+                });
+                Swal.fire('Updated!', `The user's authorization has been updated.`, 'success');
             }
         });
     };
@@ -63,9 +79,9 @@ function Users() {
     <Table sx={{ minWidth: 250 }}>
         <TableHead>
             <TableRow> 
-                <TableCell>Username</TableCell>
-                <TableCell>Authorization</TableCell>
-                <TableCell>Manage Auth</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Username</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Authorization</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Manage Auth</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
