@@ -10,7 +10,6 @@ DTC: Inventory is a web application optimized for mobile which supports [Danish 
 
 ![2022-03-24 13 01 23](https://user-images.githubusercontent.com/87159469/159981911-c24f6663-489c-4790-8ec3-9c88e123d707.gif)
 ![2022-03-24 13 03 18](https://user-images.githubusercontent.com/87159469/159981934-85b7aee6-ea5d-4ce7-be76-b9cf3d4d52be.gif)
-![2022-03-24 13 05 19](https://user-images.githubusercontent.com/87159469/159981944-4ac34fcb-ed4d-4477-b8fd-d9deffc4ea1d.gif)
 
 ## Prerequisites
 
