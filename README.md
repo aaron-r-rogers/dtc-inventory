@@ -1,121 +1,82 @@
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+# DTC: Inventory
 
-## Use the Template for This Repository (Don't Clone)
+*Project Duration: 2 Week Sprint*
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+DTC: Inventory is a web application optimized for mobile which supports [Danish Teak Classics](https://www.danishteakclassics.com/).  Danish Teak Classics is a purveyor of fine vintage furniture, and they have a warehouse full of unrestored furniture.  This app allows them to easily see and sift through the many pieces in their inventory by adding, editing, and deleting pieces of furniture.  There is a guest function which allows users to see but not change any furniture, and they may search by text and filter by category or dimensions.  The furniture is organized by cards, which when clicked into, show further details about the selected item.  Admin functionality includes photo upload along with adding furniture, adding and deleting categories, designers, or materials, and user management.
 
+## Screenshots
+
+![2022-03-24 13 01 23](https://user-images.githubusercontent.com/87159469/159981911-c24f6663-489c-4790-8ec3-9c88e123d707.gif)
+![2022-03-24 13 03 18](https://user-images.githubusercontent.com/87159469/159981934-85b7aee6-ea5d-4ce7-be76-b9cf3d4d52be.gif)
+![2022-03-24 13 05 19](https://user-images.githubusercontent.com/87159469/159981944-4ac34fcb-ed4d-4477-b8fd-d9deffc4ea1d.gif)
 
 ## Prerequisites
 
-Before you get started, make sure you have the following software installed on your computer:
+Before getting started working with this application, you should have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
-## Create database and table
+## Database Setup
 
-Create a new database called `prime_app` and create a `user` table:
+Make a new database called `dtc_inventory` in PostgreSQL and use the **database.sql** file in the root of this project to set up all of your tables.
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+## Installation
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+1. Run `npm install`
+2. Start Postgres using `brew services start postgresql`
+    - only required if PG is not already running
+3. Open a terminal and run `npm run server`
+4. Open another terminal and run `npm run client`
+5. This should open a new tab in your browser at `localhost:3000`
 
-## Development Setup Instructions
+## How to Use DTC: Inventory
 
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
+- A new user to DTC: Inventory is a guest by default.
+- Any guest user can be made into an admin user by any other admin.
+- The nav bar at the top permits navigation from anywhere to anywhere.
+- After logging in, a user will be brought to the home page which has every piece of furniture organized in cards with the most recently updated at the top.
+    - On the home page, the search uses all text associated with that piece.  This includes category, designer, material, and any comments left about the item.
+    - There is a dropdown which filters the furniture by category (i.e. sofas, dining tables, lounge chairs, etc.)
+    - The dimensions filter uses a minimum and maximum for width, depth, and height.  
+- Clicking "details" reveals more information about the item than is apparent on the home page.
+    - For admin users, there is an edit details option within the details view where the material, category, designer, dimensions, or comments can be altered.
+- If an admin user navigates to the add view, they begin adding a furniture item by uploading a photo.
+    - They will select "choose file" to select the file they wish to upload.
+    - Once a file is chosen, the "upload" button alerts the user that their file has been successfully added.
+    - The piece is tagged with a material, designer, and category using dropdowns.
+    - Minimum and maximum dimensions are entered into text fields, and this is to account for modular furniture or furniture that can expand in size.
+    - A large text field is available for anyone to leave more extensive comments or descriptions about the piece such as when it was manufactured, who manufactured it, or any cosmetic defects that need to be addressed during restoration.
+    - The "add" button alerts the user that the item has been successfully added and returns them to the home page where their newly added item appears at the top.
+- The admin section of the app uses tabs to add, delete, or manage users.
+    - Add uses one text field and three buttons to add information to either the material, designer, or category lists.
+    - Delete uses dropdowns and buttons for removing information from the same three lists.
+    - The users tab is where each user's username and authorization level can be viewed and toggled.
+- Finally, the log out button logs out the user and returns them to where they can either login or register a new user. 
 
-## Debugging
+## Built With
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+This application uses the following technologies:
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+- [React](https://reactjs.org/)
+- [Redux](https://maven.apache.org/)
+- [Redux-Sagas](https://redux-saga.js.org/)
+- [Express](https://expressjs.com/)
+- [Passport](http://www.passportjs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Material-UI](https://material-ui.com/)
+- [SweetAlert2](https://sweetalert2.github.io/)
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+(a full list of dependencies can be found in `package.json`)
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+## Acknowledgements
 
-## Testing Routes with Postman
+- I would like to thank [Prime Digital Academy](https://github.com/PrimeAcademy) for empowering me to put my acquired skills into action.
+- A very special thanks to the Woodall cohort instructor, Edan Schwartz, for providing the tools and knowledge to build this application. His instruction has been invaluable in leading us down the road to successful careers as software developers.
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
+## Support
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+For any questions, concerns, or suggestions feels free to contact me.
